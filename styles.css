@@ -1,0 +1,138 @@
+/* Global CSS Reset and Responsive Base */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+/* Ensure proper touch targets on mobile */
+button, a, input, select, textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Prevent horizontal scroll on mobile */
+@media (max-width: 768px) {
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+}
+
+/* Fallback 404 styles */
+.fallback-404 {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #f6f6f6;
+  z-index: 9999;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+.fallback-404.show {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.fallback-404-icon {
+  width: 120px;
+  height: 120px;
+  background: #ff6600;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  color: white;
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.fallback-404-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 16px 0;
+}
+
+.fallback-404-subtitle {
+  font-size: 20px;
+  color: #666;
+  margin: 0 0 32px 0;
+  line-height: 1.5;
+}
+
+.fallback-404-btn {
+  background: #ff6600;
+  color: white;
+  border: none;
+  padding: 16px 32px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.fallback-404-btn:hover {
+  background: #e65100;
+}
+
+@media (max-width: 768px) {
+  .fallback-404-icon {
+    width: 100px;
+    height: 100px;
+    font-size: 40px;
+    margin-bottom: 24px;
+  }
+
+  .fallback-404-title {
+    font-size: 36px;
+  }
+
+  .fallback-404-subtitle {
+    font-size: 18px;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .fallback-404-icon {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .fallback-404-title {
+    font-size: 28px;
+  }
+
+  .fallback-404-subtitle {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .fallback-404-btn {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+} 

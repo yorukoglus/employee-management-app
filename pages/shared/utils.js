@@ -1,9 +1,30 @@
 import { Router } from '@vaadin/router';
 
 export const navigation = {
-  goToEmployeeList: () => Router.go('/employees'),
-  goToAddEmployee: () => Router.go('/employees/add'),
-  goToEditEmployee: (id) => Router.go(`/employees/edit/${id}`)
+  goToEmployeeList: () => {
+    try {
+      Router.go('/employees');
+    } catch (error) {
+      console.error('Navigation error:', error);
+      window.location.href = '/employees';
+    }
+  },
+  goToAddEmployee: () => {
+    try {
+      Router.go('/employees/add');
+    } catch (error) {
+      console.error('Navigation error:', error);
+      window.location.href = '/employees/add';
+    }
+  },
+  goToEditEmployee: (id) => {
+    try {
+      Router.go(`/employees/edit/${id}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+      window.location.href = `/employees/edit/${id}`;
+    }
+  }
 };
 
 export const confirmations = {

@@ -53,6 +53,10 @@ export class AppMain extends LitElement {
     this.router.subscribe((location) => {
       this.currentRoute = location.pathname;
     });
+
+    this.router.addEventListener('vaadin-router-error', (event) => {
+      console.error('Router error:', event.detail);
+    });
   }
 
   _handleNav(e) {

@@ -120,4 +120,134 @@ export const employeeFormStyles = css`
     font-size: 16px;
     margin-left: 2px;
   }
+
+  /* Tablet responsive */
+  @media (max-width: 768px) {
+    .form-container {
+      margin: 24px auto 0 auto;
+      padding: 24px 20px;
+      border-radius: 12px;
+    }
+
+    .form-header {
+      margin-bottom: 24px;
+      padding-bottom: 12px;
+    }
+
+    .form-header h2 {
+      font-size: 22px;
+    }
+
+    .back-btn {
+      padding: 6px 12px;
+      font-size: 14px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 10px;
+      font-size: 14px;
+    }
+
+    .submit-btn {
+      padding: 12px 0;
+      font-size: 16px;
+    }
+  }
+
+  /* Mobile responsive */
+  @media (max-width: 600px) {
+    .form-container {
+      margin: 16px auto 0 auto;
+      padding: 20px 16px;
+      border-radius: 8px;
+    }
+
+    .form-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .form-header h2 {
+      font-size: 20px;
+    }
+
+    .back-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 10px;
+    }
+
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 12px;
+      font-size: 16px; /* Better for mobile input */
+    }
+
+    .submit-btn {
+      padding: 14px 0;
+      font-size: 16px;
+      margin-top: 16px;
+    }
+  }
+
+  /* Small mobile devices */
+  @media (max-width: 480px) {
+    .form-container {
+      margin: 12px auto 0 auto;
+      padding: 16px 12px;
+    }
+
+    .form-header {
+      margin-bottom: 16px;
+      gap: 8px;
+    }
+
+    .form-header h2 {
+      font-size: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group select {
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    .submit-btn {
+      padding: 12px 0;
+      font-size: 15px;
+    }
+
+    .error-message {
+      font-size: 13px;
+    }
+  }
 `; 

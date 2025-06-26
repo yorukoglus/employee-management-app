@@ -4,12 +4,48 @@
 
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>HR Employee Management</title>
+  <link rel="stylesheet" href="styles.css">
   <script type="module" src="./pages/app-main/app-main.js"></script>
+  <script>
+    // Fallback 404 page if router fails
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const appMain = document.querySelector('app-main');
+        if (!appMain || !appMain.shadowRoot || !appMain.shadowRoot.querySelector('#outlet').children.length) {
+          showFallback404();
+        }
+      }, 1000);
+    });
+
+    function showFallback404() {
+      const fallback = document.getElementById('fallback-404');
+      if (fallback) {
+        fallback.classList.add('show');
+      }
+    }
+
+    function goToEmployeeList() {
+      window.location.href = '/employees';
+    }
+  </script>
 </head>
 
 <body>
   <app-main></app-main>
+
+  <!-- Fallback 404 page -->
+  <div id="fallback-404" class="fallback-404">
+    <div class="fallback-404-icon">404</div>
+    <h1 class="fallback-404-title">Page Not Found</h1>
+    <p class="fallback-404-subtitle">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+    <button class="fallback-404-btn" onclick="goToEmployeeList()">
+      Go to Employee List
+    </button>
+  </div>
 </body>
 
 </html>

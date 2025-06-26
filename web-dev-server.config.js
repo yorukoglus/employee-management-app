@@ -22,4 +22,19 @@ export default {
       },
     }),
   ],
+  // Handle client-side routing for SPA
+  appIndex: 'index.html',
+  // Open browser automatically
+  open: true,
+  // Add custom middleware for SPA routing
+  middleware: [
+    (context, next) => {
+      // If the request is for a route that doesn't exist as a file,
+      // serve index.html instead
+      if (!context.url.includes('.') && context.url !== '/' && !context.url.startsWith('/employees')) {
+        context.url = '/index.html';
+      }
+      return next();
+    }
+  ]
 };

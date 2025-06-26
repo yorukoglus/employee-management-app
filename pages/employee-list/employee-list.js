@@ -109,10 +109,10 @@ export class EmployeeList extends LitElement {
             <option value="10">10</option>
           </select>
         </label>
-        <span style="color:#888;font-size:14px;">Showing ${filtered.length} of ${this.employees.length} employees</span>
+        <span class="search-info">Showing ${filtered.length} of ${this.employees.length} employees</span>
       </div>
-      ${this.view === 'table' ? this._renderTable(paginated) : this._renderList(paginated)}
-      ${this.view === 'list' ? this._renderPagination() : ''}
+      ${this._renderTable(paginated)}
+      ${this._renderMobileCards(paginated)}
     `;
   }
 
@@ -165,6 +165,50 @@ export class EmployeeList extends LitElement {
     `;
   }
 
+  _renderMobileCards(employees) {
+    return html`
+      <div class="employee-list-container">
+        ${employees.map(emp => html`
+          <div class="mobile-card">
+            <div class="mobile-card-header">
+              <div>
+                <div class="mobile-card-name">${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')} ${emp.lastName || (emp.name ? emp.name.split(' ')[1] || '' : '')}</div>
+                <div class="mobile-card-department">${emp.department || 'No Department'}</div>
+              </div>
+            </div>
+            <div class="mobile-card-details">
+              <div class="mobile-card-detail">
+                <span class="mobile-card-label">Email</span>
+                <span class="mobile-card-value">${emp.email}</span>
+              </div>
+              <div class="mobile-card-detail">
+                <span class="mobile-card-label">Phone</span>
+                <span class="mobile-card-value">${emp.phoneNumber || 'No phone'}</span>
+              </div>
+              <div class="mobile-card-detail">
+                <span class="mobile-card-label">Position</span>
+                <span class="mobile-card-value">${emp.position || 'No position'}</span>
+              </div>
+              <div class="mobile-card-detail">
+                <span class="mobile-card-label">Employed</span>
+                <span class="mobile-card-value">${this._formatDate(emp.dateOfEmployment) || 'Not specified'}</span>
+              </div>
+            </div>
+            <div class="mobile-card-actions">
+              <button class="mobile-action-btn" @click=${() => this._editEmployee(emp)}>
+                Edit
+              </button>
+              <button class="mobile-action-btn delete" @click=${() => this._deleteEmployee(emp)}>
+                Delete
+              </button>
+            </div>
+          </div>
+        `)}
+        ${this._renderPagination()}
+      </div>
+    `;
+  }
+
   _renderPagination() {
     const totalPages = this.totalPages;
     if (totalPages <= 1) return '';
@@ -188,28 +232,6 @@ export class EmployeeList extends LitElement {
         ${end < totalPages ? html`<span>...</span>` : ''}
         <button class="pagination-btn" @click=${this._nextPage} ?disabled=${this.page >= totalPages}>&gt;</button>
       </div>
-    `;
-  }
-
-  _renderList(employees) {
-    return html`
-      <ul>
-        ${employees.map(emp => html`
-          <li>
-            <div class="employee-info">
-              <div><b>${emp.name}</b> (${emp.department})</div>
-              <div class="employee-details">
-                ${emp.email} | ${emp.phoneNumber || 'No phone'} | ${emp.position || 'No position'}
-                ${emp.dateOfEmployment ? ` | Employed: ${this._formatDate(emp.dateOfEmployment)}` : ''}
-              </div>
-            </div>
-            <div>
-              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}>Edit</button>
-              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}>Delete</button>
-            </div>
-          </li>
-        `)}
-      </ul>
     `;
   }
 }
