@@ -2,11 +2,12 @@
   "name": "@lit/lit-starter-js",
   "private": true,
   "version": "2.0.2",
-  "description": "A simple web component",
+  "description": "Employee Management Application",
   "main": "my-element.js",
   "module": "my-element.js",
   "type": "module",
   "scripts": {
+    "start": "npm run serve",
     "build": "echo \"This is not a TypeScript project, so no need to build.\"",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
     "lint:eslint": "eslint '**/*.js'",
