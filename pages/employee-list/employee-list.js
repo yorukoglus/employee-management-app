@@ -18,7 +18,7 @@ export class EmployeeList extends LitElement {
     this.view = 'table';
     this.search = '';
     this.page = 1;
-    this.pageSize = 3;
+    this.pageSize = 5;
   }
 
   get filteredEmployees() {
