@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { employeeFormStyles } from './employee-form.css.js';
+import { confirmations } from '../shared/utils.js';
 
 export class EmployeeForm extends LitElement {
   static properties = {
@@ -126,7 +127,7 @@ export class EmployeeForm extends LitElement {
     if (!this._validateForm()) return;
     let confirmed = true;
     if (this._editMode) {
-      confirmed = window.confirm('Are you sure you want to update this employee record?');
+      confirmed = confirmations.updateEmployee();
     }
     if (!confirmed) return;
     // Create or update employee object
