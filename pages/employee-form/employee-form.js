@@ -157,108 +157,92 @@ export class EmployeeForm extends LitElement {
   render() {
     return html`
       <div class="form-container">
-        <div class="form-header">
-          <h2>${this._editMode ? 'Edit Employee' : 'Add New Employee'}</h2>
-          <button class="back-btn" @click=${this._navigateToList}>
-            ← Back to List
-          </button>
-        </div>
         <form @submit=${this._handleSubmit}>
-          <div class="form-row">
-            <div class="form-group ${this.errors.firstName ? 'error' : ''}">
-              <label>First Name <span class="required">*</span></label>
-              <input 
-                type="text" 
-                .value=${this._formData.firstName}
-                @input=${e => this._updateField('firstName', e.target.value)}
-                placeholder="Enter first name"
-              />
-              ${this.errors.firstName ? html`<span class="error-message">${this.errors.firstName}</span>` : ''}
-            </div>
-            <div class="form-group ${this.errors.lastName ? 'error' : ''}">
-              <label>Last Name <span class="required">*</span></label>
-              <input 
-                type="text" 
-                .value=${this._formData.lastName}
-                @input=${e => this._updateField('lastName', e.target.value)}
-                placeholder="Enter last name"
-              />
-              ${this.errors.lastName ? html`<span class="error-message">${this.errors.lastName}</span>` : ''}
-            </div>
+          <div class="form-group ${this.errors.firstName ? 'error' : ''}">
+            <label>First Name</label>
+            <input 
+              type="text" 
+              .value=${this._formData.firstName}
+              @input=${e => this._updateField('firstName', e.target.value)}
+              placeholder="First Name"
+            />
+            ${this.errors.firstName ? html`<span class="error-message">${this.errors.firstName}</span>` : ''}
           </div>
-          <div class="form-row">
-            <div class="form-group ${this.errors.dateOfEmployment ? 'error' : ''}">
-              <label>Date of Employment <span class="required">*</span></label>
-              <input 
-                type="date" 
-                .value=${this._formData.dateOfEmployment}
-                @input=${e => this._updateField('dateOfEmployment', e.target.value)}
-              />
-              ${this.errors.dateOfEmployment ? html`<span class="error-message">${this.errors.dateOfEmployment}</span>` : ''}
-            </div>
-            <div class="form-group ${this.errors.dateOfBirth ? 'error' : ''}">
-              <label>Date of Birth <span class="required">*</span></label>
-              <input 
-                type="date" 
-                .value=${this._formData.dateOfBirth}
-                @input=${e => this._updateField('dateOfBirth', e.target.value)}
-              />
-              ${this.errors.dateOfBirth ? html`<span class="error-message">${this.errors.dateOfBirth}</span>` : ''}
-            </div>
+          <div class="form-group ${this.errors.lastName ? 'error' : ''}">
+            <label>Last Name</label>
+            <input 
+              type="text" 
+              .value=${this._formData.lastName}
+              @input=${e => this._updateField('lastName', e.target.value)}
+              placeholder="Last Name"
+            />
+            ${this.errors.lastName ? html`<span class="error-message">${this.errors.lastName}</span>` : ''}
           </div>
-          <div class="form-row">
-            <div class="form-group ${this.errors.phoneNumber ? 'error' : ''}">
-              <label>Phone Number <span class="required">*</span></label>
-              <input 
-                type="tel" 
-                .value=${this._formData.phoneNumber}
-                @input=${e => this._updateField('phoneNumber', e.target.value)}
-                placeholder="Enter phone number"
-              />
-              ${this.errors.phoneNumber ? html`<span class="error-message">${this.errors.phoneNumber}</span>` : ''}
-            </div>
-            <div class="form-group ${this.errors.email ? 'error' : ''}">
-              <label>Email Address <span class="required">*</span></label>
-              <input 
-                type="email" 
-                .value=${this._formData.email}
-                @input=${e => this._updateField('email', e.target.value)}
-                placeholder="Enter email address"
-              />
-              ${this.errors.email ? html`<span class="error-message">${this.errors.email}</span>` : ''}
-            </div>
+          <div class="form-group ${this.errors.dateOfEmployment ? 'error' : ''}">
+            <label>Date of Employment</label>
+            <input 
+              type="date" 
+              .value=${this._formData.dateOfEmployment}
+              @input=${e => this._updateField('dateOfEmployment', e.target.value)}
+            />
+            ${this.errors.dateOfEmployment ? html`<span class="error-message">${this.errors.dateOfEmployment}</span>` : ''}
           </div>
-          <div class="form-row">
-            <div class="form-group ${this.errors.department ? 'error' : ''}">
-              <label>Department <span class="required">*</span></label>
-              <select 
-                .value=${this._formData.department}
-                @change=${e => this._updateField('department', e.target.value)}
-              >
-                <option value="">Select Department</option>
-                ${this.departments.map(dept => html`
-                  <option value=${dept}>${dept}</option>
-                `)}
-              </select>
-              ${this.errors.department ? html`<span class="error-message">${this.errors.department}</span>` : ''}
-            </div>
-            <div class="form-group ${this.errors.position ? 'error' : ''}">
-              <label>Position <span class="required">*</span></label>
-              <select 
-                .value=${this._formData.position}
-                @change=${e => this._updateField('position', e.target.value)}
-              >
-                <option value="">Select Position</option>
-                ${this.positions.map(pos => html`
-                  <option value=${pos}>${pos}</option>
-                `)}
-              </select>
-              ${this.errors.position ? html`<span class="error-message">${this.errors.position}</span>` : ''}
-            </div>
+          <div class="form-group ${this.errors.dateOfBirth ? 'error' : ''}">
+            <label>Date of Birth</label>
+            <input 
+              type="date" 
+              .value=${this._formData.dateOfBirth}
+              @input=${e => this._updateField('dateOfBirth', e.target.value)}
+            />
+            ${this.errors.dateOfBirth ? html`<span class="error-message">${this.errors.dateOfBirth}</span>` : ''}
           </div>
-          <button type="submit" class="submit-btn">
-            ${this._editMode ? 'Update Employee' : 'Add Employee'}
-          </button>
+          <div class="form-group ${this.errors.phoneNumber ? 'error' : ''}">
+            <label>Phone</label>
+            <input 
+              type="tel" 
+              .value=${this._formData.phoneNumber}
+              @input=${e => this._updateField('phoneNumber', e.target.value)}
+              placeholder="Phone"
+            />
+            ${this.errors.phoneNumber ? html`<span class="error-message">${this.errors.phoneNumber}</span>` : ''}
+          </div>
+          <div class="form-group ${this.errors.email ? 'error' : ''}">
+            <label>Email</label>
+            <input 
+              type="email" 
+              .value=${this._formData.email}
+              @input=${e => this._updateField('email', e.target.value)}
+              placeholder="Email"
+            />
+            ${this.errors.email ? html`<span class="error-message">${this.errors.email}</span>` : ''}
+          </div>
+          <div class="form-group ${this.errors.department ? 'error' : ''}">
+            <label>Department</label>
+            <input 
+              type="text" 
+              .value=${this._formData.department}
+              @input=${e => this._updateField('department', e.target.value)}
+              placeholder="Department"
+            />
+            ${this.errors.department ? html`<span class="error-message">${this.errors.department}</span>` : ''}
+          </div>
+          <div class="form-group ${this.errors.position ? 'error' : ''}">
+            <label>Position</label>
+            <select 
+              .value=${this._formData.position}
+              @change=${e => this._updateField('position', e.target.value)}
+            >
+              <option value="">Please Select</option>
+              ${this.positions.map(pos => html`
+                <option value=${pos}>${pos}</option>
+              `)}
+            </select>
+            ${this.errors.position ? html`<span class="error-message">${this.errors.position}</span>` : ''}
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="save-btn">Save</button>
+            <button type="button" class="cancel-btn" @click=${this._navigateToList}>Cancel</button>
+          </div>
         </form>
       </div>
     `;

@@ -88,6 +88,10 @@ export class EmployeeList extends LitElement {
     return new Date(dateString).toLocaleDateString();
   }
 
+  get isMobile() {
+    return window.innerWidth <= 768;
+  }
+
   render() {
     const filtered = this.filteredEmployees;
     const paginated = this.paginatedEmployees;
@@ -111,8 +115,7 @@ export class EmployeeList extends LitElement {
         </label>
         <span class="search-info">Showing ${filtered.length} of ${this.employees.length} employees</span>
       </div>
-      ${this._renderTable(paginated)}
-      ${this._renderMobileCards(paginated)}
+      ${this.isMobile ? this._renderMobileCards(paginated) : this._renderTable(paginated)}
     `;
   }
 
@@ -233,6 +236,20 @@ export class EmployeeList extends LitElement {
         <button class="pagination-btn" @click=${this._nextPage} ?disabled=${this.page >= totalPages}>&gt;</button>
       </div>
     `;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('resize', this._handleResize.bind(this));
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('resize', this._handleResize.bind(this));
+  }
+
+  _handleResize() {
+    this.requestUpdate();
   }
 }
 

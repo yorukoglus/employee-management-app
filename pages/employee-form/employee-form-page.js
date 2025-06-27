@@ -52,7 +52,7 @@ export class EmployeeFormPage extends LitElement {
     return html`
       <div class="page-header">
         ${icons.form}
-        ${this.isEdit ? 'Edit Employee' : 'Add New Employee'}
+        ${this.isEdit ? 'Edit Employee' : 'Add Employee'}
       </div>
       <employee-form
         .employee=${this.employee}

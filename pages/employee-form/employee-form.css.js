@@ -3,251 +3,156 @@ import { css } from 'lit';
 export const employeeFormStyles = css`
   :host {
     display: block;
-    background: #f6f6f6;
+    background: #fafafa;
     min-height: 100vh;
     font-family: 'Inter', Arial, sans-serif;
   }
   .form-container {
-    max-width: 600px;
+    max-width: 92vw;
+    width: 92vw;
+    min-width: 320px;
     margin: 40px auto 0 auto;
-    padding: 32px 28px 28px 28px;
+    padding: 40px 32px 48px 32px;
     background-color: #fff;
-    border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    border: none;
   }
   .form-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-    padding-bottom: 15px;
-    border-bottom: 2px solid #f0f0f0;
-  }
-  .form-header h2 {
-    color: #ff6600;
+    margin-bottom: 32px;
+    padding-bottom: 0;
+    border-bottom: none;
     font-size: 24px;
     font-weight: 700;
-    margin: 0;
-  }
-  .back-btn {
-    background-color: #fff;
     color: #ff6600;
-    border: 1.5px solid #ff6600;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: background 0.2s, color 0.2s;
+    text-align: left;
   }
-  .back-btn:hover {
-    background: #ffe5d0;
-    color: #e65100;
+  form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    gap: 32px 32px;
+    align-items: start;
+    justify-items: stretch;
+    margin-bottom: 40px;
   }
   .form-group {
-    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
   }
   .form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 600;
+    font-weight: 500;
     color: #222;
     font-size: 15px;
+    margin-bottom: 2px;
   }
   .form-group input,
   .form-group select {
     width: 100%;
-    padding: 12px;
-    border: 1.5px solid #e0e0e0;
-    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1.2px solid #bdbdbd;
+    border-radius: 3px;
     font-size: 15px;
-    box-sizing: border-box;
+    background: #fff;
     outline: none;
     transition: border 0.2s;
-    background: #faf9f8;
   }
   .form-group input:focus,
   .form-group select:focus {
     border-color: #ff6600;
-    background: #fff;
-  }
-  .form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  @media (max-width: 700px) {
-    .form-row { grid-template-columns: 1fr; }
-    .form-container { padding: 18px 6px; }
-  }
-  .error-message {
-    color: #dc3545;
-    font-size: 14px;
-    margin-top: 5px;
-    display: block;
   }
   .form-group.error input,
   .form-group.error select {
     border-color: #dc3545;
     background: #fff0f3;
   }
-  .submit-btn {
+  .error-message {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .form-actions {
+    grid-column: 1 / span 3;
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 16px;
+  }
+  .save-btn {
     background-color: #ff6600;
     color: #fff;
     border: none;
-    padding: 14px 0;
-    border-radius: 8px;
-    font-size: 17px;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-size: 18px;
     font-weight: 600;
     cursor: pointer;
-    width: 100%;
-    margin-top: 20px;
+    width: 220px;
     transition: background 0.2s;
   }
-  .submit-btn:hover {
+  .save-btn:hover {
     background-color: #e65100;
   }
-  .submit-btn:disabled {
-    background-color: #f0a366;
-    cursor: not-allowed;
+  .cancel-btn {
+    background: #fff;
+    color: #3a237e;
+    border: 1.5px solid #3a237e;
+    padding: 12px 0;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    width: 220px;
+    transition: background 0.2s, color 0.2s;
   }
-  .required {
-    color: #ff6600;
-    font-size: 16px;
-    margin-left: 2px;
+  .cancel-btn:hover {
+    background: #f3f0ff;
+    color: #1a0e4a;
   }
-
-  /* Tablet responsive */
-  @media (max-width: 768px) {
+  @media (max-width: 1100px) {
     .form-container {
-      margin: 24px auto 0 auto;
-      padding: 24px 20px;
-      border-radius: 12px;
+      padding: 32px 12px 36px 12px;
     }
-
-    .form-header {
-      margin-bottom: 24px;
-      padding-bottom: 12px;
+    form {
+      gap: 24px 16px;
     }
-
-    .form-header h2 {
-      font-size: 22px;
-    }
-
-    .back-btn {
-      padding: 6px 12px;
-      font-size: 14px;
-    }
-
-    .form-group {
-      margin-bottom: 16px;
-    }
-
-    .form-group label {
-      font-size: 14px;
-    }
-
-    .form-group input,
-    .form-group select {
-      padding: 10px;
-      font-size: 14px;
-    }
-
-    .submit-btn {
-      padding: 12px 0;
+    .save-btn, .cancel-btn {
+      width: 160px;
       font-size: 16px;
     }
   }
-
-  /* Mobile responsive */
+  @media (max-width: 900px) {
+    form {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(5, auto);
+    }
+    .form-actions {
+      grid-column: 1 / span 2;
+    }
+  }
   @media (max-width: 600px) {
     .form-container {
+      padding: 12px 2vw 18px 2vw;
       margin: 16px auto 0 auto;
-      padding: 20px 16px;
-      border-radius: 8px;
     }
-
     .form-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .form-header h2 {
       font-size: 20px;
+      margin-bottom: 18px;
     }
-
-    .back-btn {
-      width: 100%;
-      justify-content: center;
-      padding: 10px;
-    }
-
-    .form-row {
+    form {
       grid-template-columns: 1fr;
+      grid-template-rows: repeat(8, auto);
+      gap: 16px 0;
+    }
+    .form-actions {
+      grid-column: 1 / span 1;
+      flex-direction: column;
       gap: 16px;
     }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-group input,
-    .form-group select {
-      padding: 12px;
-      font-size: 16px; /* Better for mobile input */
-    }
-
-    .submit-btn {
-      padding: 14px 0;
+    .save-btn, .cancel-btn {
+      width: 100%;
       font-size: 16px;
-      margin-top: 16px;
-    }
-  }
-
-  /* Small mobile devices */
-  @media (max-width: 480px) {
-    .form-container {
-      margin: 12px auto 0 auto;
-      padding: 16px 12px;
-    }
-
-    .form-header {
-      margin-bottom: 16px;
-      gap: 8px;
-    }
-
-    .form-header h2 {
-      font-size: 18px;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-group label {
-      font-size: 14px;
-      margin-bottom: 6px;
-    }
-
-    .form-group input,
-    .form-group select {
-      padding: 10px;
-      font-size: 16px;
-    }
-
-    .submit-btn {
-      padding: 12px 0;
-      font-size: 15px;
-    }
-
-    .error-message {
-      font-size: 13px;
     }
   }
 `; 
