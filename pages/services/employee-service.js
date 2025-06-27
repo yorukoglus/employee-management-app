@@ -11,7 +11,8 @@ class EmployeeService {
   }
 
   getEmployeeById(id) {
-    return this.employees.find(emp => emp.id === id);
+    const numId = typeof id === 'string' ? Number(id) : id;
+    return this.employees.find(emp => emp.id === numId);
   }
 
   addEmployee(employee) {
