@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { employeeListStyles } from './employee-list.css.js';
+import '../components/confirm-modal/confirm-modal.js';
 
 export class EmployeeList extends LitElement {
   static properties = {
@@ -8,6 +9,8 @@ export class EmployeeList extends LitElement {
     search: { type: String },
     page: { type: Number },
     pageSize: { type: Number },
+    _showDeleteModal: { type: Boolean, state: true },
+    _employeeToDelete: { type: Object, state: true },
   };
 
   static styles = employeeListStyles;
@@ -19,6 +22,8 @@ export class EmployeeList extends LitElement {
     this.search = '';
     this.page = 1;
     this.pageSize = 5;
+    this._showDeleteModal = false;
+    this._employeeToDelete = null;
   }
 
   get filteredEmployees() {
@@ -76,11 +81,25 @@ export class EmployeeList extends LitElement {
   }
 
   _deleteEmployee(employee) {
-    this.dispatchEvent(new CustomEvent('delete-employee', {
-      detail: employee,
-      bubbles: true,
-      composed: true
-    }));
+    this._employeeToDelete = employee;
+    this._showDeleteModal = true;
+  }
+
+  _handleModalCancel() {
+    this._showDeleteModal = false;
+    this._employeeToDelete = null;
+  }
+
+  _handleModalProceed() {
+    if (this._employeeToDelete) {
+      this.dispatchEvent(new CustomEvent('delete-employee', {
+        detail: this._employeeToDelete,
+        bubbles: true,
+        composed: true
+      }));
+    }
+    this._showDeleteModal = false;
+    this._employeeToDelete = null;
   }
 
   _formatDate(dateString) {
@@ -116,6 +135,13 @@ export class EmployeeList extends LitElement {
         <span class="search-info">Showing ${filtered.length} of ${this.employees.length} employees</span>
       </div>
       ${this.isMobile ? this._renderMobileCards(paginated) : this._renderTable(paginated)}
+      <confirm-modal
+        ?open=${this._showDeleteModal}
+        .title=${"Are you sure?"}
+        .message=${this._employeeToDelete ? `Selected Employee record of ${this._employeeToDelete.firstName} ${this._employeeToDelete.lastName} will be deleted` : ''}
+        @cancel=${this._handleModalCancel}
+        @proceed=${this._handleModalProceed}
+      ></confirm-modal>
     `;
   }
 
