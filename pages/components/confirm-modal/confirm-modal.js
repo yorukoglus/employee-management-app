@@ -1,8 +1,9 @@
 import { LitElement, html } from 'lit';
 import { confirmModalStyles } from './confirm-modal.css.js';
 import { commonStyles } from '../../shared/common-styles.css.js';
+import { I18nMixin } from '../../shared/i18n-mixin.js';
 
-export class ConfirmModal extends LitElement {
+export class ConfirmModal extends I18nMixin(LitElement) {
   static properties = {
     open: { type: Boolean },
     title: { type: String },
@@ -31,12 +32,12 @@ export class ConfirmModal extends LitElement {
       <div class="modal">
         <div class="modal-header">
           <span class="modal-title">${this.title}</span>
-          <button class="close-btn" @click=${this._close} title="Close">&#10005;</button>
+          <button class="close-btn" @click=${this._close} title=${this.t('close')}>&#10005;</button>
         </div>
         <div class="modal-message">${this.message}</div>
         <div class="modal-actions">
-          <button class="btn btn-danger" @click=${this._proceed}>Proceed</button>
-          <button class="btn btn-outline" @click=${this._close}>Cancel</button>
+          <button class="btn btn-danger" @click=${this._proceed}>${this.t('proceed')}</button>
+          <button class="btn btn-outline" @click=${this._close}>${this.t('cancel')}</button>
         </div>
       </div>
     `;

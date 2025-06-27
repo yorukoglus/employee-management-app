@@ -2,8 +2,9 @@ import { LitElement, html } from 'lit';
 import { employeeFormStyles } from './employee-form.css.js';
 import { commonStyles } from '../shared/common-styles.css.js';
 import { confirmations } from '../shared/utils.js';
+import { I18nMixin } from '../shared/i18n-mixin.js';
 
-export class EmployeeForm extends LitElement {
+export class EmployeeForm extends I18nMixin(LitElement) {
   static properties = {
     employee: { type: Object }, // If null, add mode; if object, edit mode
     errors: { type: Object },
@@ -19,8 +20,8 @@ export class EmployeeForm extends LitElement {
     super();
     this.employee = null;
     this.errors = {};
-    this.departments = ['Analytics', 'Tech'];
-    this.positions = ['Junior', 'Medior', 'Senior'];
+    this.departments = [this.t('analytics'), this.t('tech')];
+    this.positions = [this.t('junior'), this.t('medior'), this.t('senior')];
     this._formData = this._getInitialFormData();
     this._editMode = false;
   }
@@ -54,62 +55,62 @@ export class EmployeeForm extends LitElement {
     const errors = {};
     // First Name validation
     if (!this._formData.firstName.trim()) {
-      errors.firstName = 'First name is required';
+      errors.firstName = this.t('firstNameRequired');
     } else if (this._formData.firstName.length < 2) {
-      errors.firstName = 'First name must be at least 2 characters';
+      errors.firstName = this.t('firstNameMinLength');
     }
     // Last Name validation
     if (!this._formData.lastName.trim()) {
-      errors.lastName = 'Last name is required';
+      errors.lastName = this.t('lastNameRequired');
     } else if (this._formData.lastName.length < 2) {
-      errors.lastName = 'Last name must be at least 2 characters';
+      errors.lastName = this.t('lastNameMinLength');
     }
     // Date of Employment validation
     if (!this._formData.dateOfEmployment) {
-      errors.dateOfEmployment = 'Date of employment is required';
+      errors.dateOfEmployment = this.t('dateOfEmploymentRequired');
     } else {
       const employmentDate = new Date(this._formData.dateOfEmployment);
       const today = new Date();
       if (employmentDate > today) {
-        errors.dateOfEmployment = 'Date of employment cannot be in the future';
+        errors.dateOfEmployment = this.t('dateOfEmploymentFuture');
       }
     }
     // Date of Birth validation
     if (!this._formData.dateOfBirth) {
-      errors.dateOfBirth = 'Date of birth is required';
+      errors.dateOfBirth = this.t('dateOfBirthRequired');
     } else {
       const birthDate = new Date(this._formData.dateOfBirth);
       const today = new Date();
       const age = today.getFullYear() - birthDate.getFullYear();
       if (age < 18 || age > 100) {
-        errors.dateOfBirth = 'Employee must be between 18 and 100 years old';
+        errors.dateOfBirth = this.t('dateOfBirthAge');
       }
     }
     // Phone Number validation
     if (!this._formData.phoneNumber.trim()) {
-      errors.phoneNumber = 'Phone number is required';
+      errors.phoneNumber = this.t('phoneRequired');
     } else {
       const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
       if (!phoneRegex.test(this._formData.phoneNumber.replace(/[\s\-\(\)]/g, ''))) {
-        errors.phoneNumber = 'Please enter a valid phone number';
+        errors.phoneNumber = this.t('phoneInvalid');
       }
     }
     // Email validation
     if (!this._formData.email.trim()) {
-      errors.email = 'Email is required';
+      errors.email = this.t('emailRequired');
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(this._formData.email)) {
-        errors.email = 'Please enter a valid email address';
+        errors.email = this.t('emailInvalid');
       }
     }
     // Department validation
     if (!this._formData.department) {
-      errors.department = 'Department is required';
+      errors.department = this.t('departmentRequired');
     }
     // Position validation
     if (!this._formData.position) {
-      errors.position = 'Position is required';
+      errors.position = this.t('positionRequired');
     }
     this.errors = errors;
     return Object.keys(errors).length === 0;
@@ -156,31 +157,35 @@ export class EmployeeForm extends LitElement {
   }
 
   render() {
+    // Update departments and positions when language changes
+    this.departments = [this.t('analytics'), this.t('tech')];
+    this.positions = [this.t('junior'), this.t('medior'), this.t('senior')];
+    
     return html`
       <div class="form-container">
         <form @submit=${this._handleSubmit}>
           <div class="form-group ${this.errors.firstName ? 'error' : ''}">
-            <label>First Name</label>
+            <label>${this.t('firstName')}</label>
             <input 
               type="text" 
               .value=${this._formData.firstName}
               @input=${e => this._updateField('firstName', e.target.value)}
-              placeholder="First Name"
+              placeholder=${this.t('firstName')}
             />
             ${this.errors.firstName ? html`<span class="error-message">${this.errors.firstName}</span>` : ''}
           </div>
           <div class="form-group ${this.errors.lastName ? 'error' : ''}">
-            <label>Last Name</label>
+            <label>${this.t('lastName')}</label>
             <input 
               type="text" 
               .value=${this._formData.lastName}
               @input=${e => this._updateField('lastName', e.target.value)}
-              placeholder="Last Name"
+              placeholder=${this.t('lastName')}
             />
             ${this.errors.lastName ? html`<span class="error-message">${this.errors.lastName}</span>` : ''}
           </div>
           <div class="form-group ${this.errors.dateOfEmployment ? 'error' : ''}">
-            <label>Date of Employment</label>
+            <label>${this.t('dateOfEmployment')}</label>
             <input 
               type="date" 
               .value=${this._formData.dateOfEmployment}
@@ -189,7 +194,7 @@ export class EmployeeForm extends LitElement {
             ${this.errors.dateOfEmployment ? html`<span class="error-message">${this.errors.dateOfEmployment}</span>` : ''}
           </div>
           <div class="form-group ${this.errors.dateOfBirth ? 'error' : ''}">
-            <label>Date of Birth</label>
+            <label>${this.t('dateOfBirth')}</label>
             <input 
               type="date" 
               .value=${this._formData.dateOfBirth}
@@ -198,42 +203,42 @@ export class EmployeeForm extends LitElement {
             ${this.errors.dateOfBirth ? html`<span class="error-message">${this.errors.dateOfBirth}</span>` : ''}
           </div>
           <div class="form-group ${this.errors.phoneNumber ? 'error' : ''}">
-            <label>Phone</label>
+            <label>${this.t('phone')}</label>
             <input 
               type="tel" 
               .value=${this._formData.phoneNumber}
               @input=${e => this._updateField('phoneNumber', e.target.value)}
-              placeholder="Phone"
+              placeholder=${this.t('phone')}
             />
             ${this.errors.phoneNumber ? html`<span class="error-message">${this.errors.phoneNumber}</span>` : ''}
           </div>
           <div class="form-group ${this.errors.email ? 'error' : ''}">
-            <label>Email</label>
+            <label>${this.t('email')}</label>
             <input 
               type="email" 
               .value=${this._formData.email}
               @input=${e => this._updateField('email', e.target.value)}
-              placeholder="Email"
+              placeholder=${this.t('email')}
             />
             ${this.errors.email ? html`<span class="error-message">${this.errors.email}</span>` : ''}
           </div>
           <div class="form-group ${this.errors.department ? 'error' : ''}">
-            <label>Department</label>
+            <label>${this.t('department')}</label>
             <input 
               type="text" 
               .value=${this._formData.department}
               @input=${e => this._updateField('department', e.target.value)}
-              placeholder="Department"
+              placeholder=${this.t('department')}
             />
             ${this.errors.department ? html`<span class="error-message">${this.errors.department}</span>` : ''}
           </div>
           <div class="form-group ${this.errors.position ? 'error' : ''}">
-            <label>Position</label>
+            <label>${this.t('position')}</label>
             <select 
               .value=${this._formData.position}
               @change=${e => this._updateField('position', e.target.value)}
             >
-              <option value="">Please Select</option>
+              <option value="">${this.t('pleaseSelect')}</option>
               ${this.positions.map(pos => html`
                 <option value=${pos}>${pos}</option>
               `)}
@@ -241,8 +246,8 @@ export class EmployeeForm extends LitElement {
             ${this.errors.position ? html`<span class="error-message">${this.errors.position}</span>` : ''}
           </div>
           <div class="form-actions">
-            <button type="submit" class="btn btn-danger">Save</button>
-            <button type="button" class="btn btn-outline" @click=${this._navigateToList}>Cancel</button>
+            <button type="submit" class="btn btn-danger">${this.t('save')}</button>
+            <button type="button" class="btn btn-outline" @click=${this._navigateToList}>${this.t('cancel')}</button>
           </div>
         </form>
       </div>

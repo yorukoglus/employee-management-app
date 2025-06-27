@@ -49,6 +49,36 @@ export const appNavStyles = css`
     text-decoration: underline;
   }
 
+  .language-switcher {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: 16px;
+  }
+
+  .lang-btn {
+    background: none;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    color: #666;
+  }
+
+  .lang-btn:hover {
+    border-color: #ff6600;
+    color: #ff6600;
+  }
+
+  .lang-btn.active {
+    background: #ff6600;
+    border-color: #ff6600;
+    color: white;
+  }
+
   .logo-area {
     display: flex;
     align-items: center;
@@ -92,6 +122,10 @@ export const appNavStyles = css`
     .nav-link {
       font-size: 15px;
       padding: 8px 12px;
+    }
+
+    .language-switcher {
+      margin-left: 12px;
     }
   }
 
@@ -144,6 +178,20 @@ export const appNavStyles = css`
     .nav-link.active, .nav-link:hover {
       background: #ffe5d0;
       color: #e65100;
+    }
+
+    .language-switcher {
+      width: 100%;
+      justify-content: center;
+      margin: 16px 0;
+      padding: 0 20px;
+    }
+
+    .lang-btn {
+      flex: 1;
+      max-width: 60px;
+      padding: 8px 12px;
+      font-size: 14px;
     }
   }
 

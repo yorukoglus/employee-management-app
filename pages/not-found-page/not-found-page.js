@@ -1,7 +1,8 @@
 import { LitElement, html, css } from 'lit';
 import { navigation } from '../shared/utils.js';
+import { I18nMixin } from '../shared/i18n-mixin.js';
 
-export class NotFoundPage extends LitElement {
+export class NotFoundPage extends I18nMixin(LitElement) {
   static styles = css`
     :host {
       display: block;
@@ -176,12 +177,12 @@ export class NotFoundPage extends LitElement {
     return html`
       <div class="not-found-container">
         <div class="not-found-icon">404</div>
-        <h1 class="not-found-title">Page Not Found</h1>
+        <h1 class="not-found-title">${this.t('pageNotFound')}</h1>
         <p class="not-found-subtitle">
-          The page you're looking for doesn't exist or has been moved.
+          ${this.t('pageNotFoundSubtitle')}
         </p>
         <button class="go-home-btn" @click=${this._goHome}>
-          Go to Employee List
+          ${this.t('goToEmployeeList')}
         </button>
       </div>
     `;

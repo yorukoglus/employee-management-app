@@ -56,7 +56,6 @@ npm run test:watch
 
 ## 📝 Geliştirme
 
-### Kod Kalitesi
 
 ```bash
 # Linting
@@ -66,28 +65,3 @@ npm run lint
 npm run format
 ```
 
-### Dokümantasyon
-
-```bash
-# Dokümantasyon sitesini oluştur
-npm run docs
-
-# Dokümantasyon sunucusunu başlat
-npm run docs:serve
-```
-
-## 📄 Lisans
-
-Bu proje BSD-3-Clause lisansı altında lisanslanmıştır.
-
-## 🤝 Katkıda Bulunma
-
-1. Projeyi fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Değişikliklerinizi commit edin (`git commit -m 'Add amazing feature'`)
-4. Branch'inizi push edin (`git push origin feature/amazing-feature`)
-5. Pull Request oluşturun
-
-## 📞 İletişim
-
-Sorularınız için issue açabilir veya proje sahibi ile iletişime geçebilirsiniz.

@@ -2,10 +2,11 @@ import { LitElement, html } from 'lit';
 import { pageStyles } from '../shared/page-styles.css.js';
 import { icons } from '../shared/icons.js';
 import { navigation, routeUtils } from '../shared/utils.js';
+import { I18nMixin } from '../shared/i18n-mixin.js';
 import './employee-form.js';
 import { employeeService } from '../services/employee-service.js';
 
-export class EmployeeFormPage extends LitElement {
+export class EmployeeFormPage extends I18nMixin(LitElement) {
   static properties = {
     employee: { type: Object },
     isEdit: { type: Boolean },
@@ -52,7 +53,7 @@ export class EmployeeFormPage extends LitElement {
     return html`
       <div class="page-header">
         ${icons.form}
-        ${this.isEdit ? 'Edit Employee' : 'Add Employee'}
+        ${this.isEdit ? this.t('editEmployee') : this.t('addEmployee')}
       </div>
       <employee-form
         .employee=${this.employee}

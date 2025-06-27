@@ -1,9 +1,10 @@
 import { LitElement, html } from 'lit';
 import { employeeListStyles } from './employee-list.css.js';
 import { commonStyles } from '../shared/common-styles.css.js';
+import { I18nMixin } from '../shared/i18n-mixin.js';
 import '../components/confirm-modal/confirm-modal.js';
 
-export class EmployeeList extends LitElement {
+export class EmployeeList extends I18nMixin(LitElement) {
   static properties = {
     employees: { type: Array },
     view: { type: String },
@@ -123,10 +124,10 @@ export class EmployeeList extends LitElement {
     const paginated = this.paginatedEmployees;
     return html`
       <div class="view-toggle-bar">
-        <button class="view-toggle-btn ${this.viewMode === 'list' ? 'active' : ''}" @click=${() => this._setViewMode('list')} title="List View">
+        <button class="view-toggle-btn ${this.viewMode === 'list' ? 'active' : ''}" @click=${() => this._setViewMode('list')} title=${this.t('listView')}>
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="8" width="20" height="2" rx="1" fill="#ff6600"/><rect x="6" y="15" width="20" height="2" rx="1" fill="#ff6600"/><rect x="6" y="22" width="20" height="2" rx="1" fill="#ff6600"/></svg>
         </button>
-        <button class="view-toggle-btn ${this.viewMode === 'grid' ? 'active' : ''}" @click=${() => this._setViewMode('grid')} title="Grid View">
+        <button class="view-toggle-btn ${this.viewMode === 'grid' ? 'active' : ''}" @click=${() => this._setViewMode('grid')} title=${this.t('gridView')}>
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="14" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="22" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="6" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="14" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="22" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/></svg>
         </button>
       </div>
@@ -134,25 +135,25 @@ export class EmployeeList extends LitElement {
         <input 
           class="search-input"
           type="text" 
-          placeholder="Search by name, department, email, or phone..." 
+          placeholder=${this.t('searchPlaceholder')}
           @input=${e => this.search = e.target.value}
           value=${this.search}
         />
         <label>
-          Page size:
+          ${this.t('pageSize')}
           <select class="page-size-select" @change=${this._changePageSize} .value=${this.pageSize}>
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
           </select>
         </label>
-        <span class="search-info">Showing ${filtered.length} of ${this.employees.length} employees</span>
+        <span class="search-info">${this.t('showingOf', { filtered: filtered.length, total: this.employees.length })}</span>
       </div>
       ${this.viewMode === 'list' ? (this.isMobile ? this._renderMobileCards(paginated) : this._renderTable(paginated)) : this._renderGridCards(paginated)}
       <confirm-modal
         ?open=${this._showDeleteModal}
-        .title=${"Are you sure?"}
-        .message=${this._employeeToDelete ? `Selected Employee record of ${this._employeeToDelete.firstName} ${this._employeeToDelete.lastName} will be deleted` : ''}
+        .title=${this.t('modalTitle')}
+        .message=${this._employeeToDelete ? this.t('deleteEmployeeConfirm', { firstName: this._employeeToDelete.firstName, lastName: this._employeeToDelete.lastName }) : ''}
         @cancel=${this._handleModalCancel}
         @proceed=${this._handleModalProceed}
       ></confirm-modal>
@@ -166,15 +167,15 @@ export class EmployeeList extends LitElement {
           <thead>
             <tr class="table-header">
               <th class="checkbox-cell"><input type="checkbox" disabled /></th>
-              <th>First Name</th>
-              <th>Last Name</th>
-              <th>Date of Employment</th>
-              <th>Date of Birth</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Department</th>
-              <th>Position</th>
-              <th>Actions</th>
+              <th>${this.t('firstName')}</th>
+              <th>${this.t('lastName')}</th>
+              <th>${this.t('dateOfEmployment')}</th>
+              <th>${this.t('dateOfBirth')}</th>
+              <th>${this.t('phone')}</th>
+              <th>${this.t('email')}</th>
+              <th>${this.t('department')}</th>
+              <th>${this.t('position')}</th>
+              <th>${this.t('actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -191,10 +192,10 @@ export class EmployeeList extends LitElement {
                 <td>${emp.position || '-'}</td>
                 <td>
                   <div class="action-icons">
-                    <button class="icon-btn" title="Edit" @click=${() => this._editEmployee(emp)}>
+                    <button class="icon-btn" title=${this.t('edit')} @click=${() => this._editEmployee(emp)}>
                       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg>
                     </button>
-                    <button class="icon-btn" title="Delete" @click=${() => this._deleteEmployee(emp)}>
+                    <button class="icon-btn" title=${this.t('delete')} @click=${() => this._deleteEmployee(emp)}>
                       <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M5 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>
                     </button>
                   </div>
@@ -221,15 +222,15 @@ export class EmployeeList extends LitElement {
             </div>
             <div class="mobile-card-details">
               <div class="mobile-card-detail">
-                <span class="mobile-card-label">Email</span>
+                <span class="mobile-card-label">${this.t('email')}</span>
                 <span class="mobile-card-value">${emp.email}</span>
               </div>
               <div class="mobile-card-detail">
-                <span class="mobile-card-label">Phone</span>
+                <span class="mobile-card-label">${this.t('phone')}</span>
                 <span class="mobile-card-value">${emp.phoneNumber || 'No phone'}</span>
               </div>
               <div class="mobile-card-detail">
-                <span class="mobile-card-label">Position</span>
+                <span class="mobile-card-label">${this.t('position')}</span>
                 <span class="mobile-card-value">${emp.position || 'No position'}</span>
               </div>
               <div class="mobile-card-detail">
@@ -238,8 +239,8 @@ export class EmployeeList extends LitElement {
               </div>
             </div>
             <div class="mobile-card-actions">
-              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}>Edit</button>
-              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}>Delete</button>
+              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}>${this.t('edit')}</button>
+              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}>${this.t('delete')}</button>
             </div>
           </div>
         `)}
@@ -254,24 +255,24 @@ export class EmployeeList extends LitElement {
         ${employees.map(emp => html`
           <div class="card">
             <div class="employee-card-row">
-              <div><b>First Name:</b> ${emp.firstName}</div>
-              <div><b>Last Name:</b> ${emp.lastName}</div>
+              <div><b>${this.t('firstName')}:</b> ${emp.firstName}</div>
+              <div><b>${this.t('lastName')}:</b> ${emp.lastName}</div>
             </div>
             <div class="employee-card-row">
-              <div><b>Date of Employment:</b> ${this._formatDate(emp.dateOfEmployment)}</div>
-              <div><b>Date of Birth:</b> ${this._formatDate(emp.dateOfBirth)}</div>
+              <div><b>${this.t('dateOfEmployment')}:</b> ${this._formatDate(emp.dateOfEmployment)}</div>
+              <div><b>${this.t('dateOfBirth')}:</b> ${this._formatDate(emp.dateOfBirth)}</div>
             </div>
             <div class="employee-card-row">
-              <div><b>Phone:</b> ${emp.phoneNumber}</div>
-              <div><b>Email:</b> ${emp.email}</div>
+              <div><b>${this.t('phone')}:</b> ${emp.phoneNumber}</div>
+              <div><b>${this.t('email')}:</b> ${emp.email}</div>
             </div>
             <div class="employee-card-row">
-              <div><b>Department:</b> ${emp.department}</div>
-              <div><b>Position:</b> ${emp.position}</div>
+              <div><b>${this.t('department')}:</b> ${emp.department}</div>
+              <div><b>${this.t('position')}:</b> ${emp.position}</div>
             </div>
             <div class="employee-card-actions">
-              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}><span class="icon">✏️</span> Edit</button>
-              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}><span class="icon">🗑️</span> Delete</button>
+              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}><span class="icon">✏️</span> ${this.t('edit')}</button>
+              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}><span class="icon">🗑️</span> ${this.t('delete')}</button>
             </div>
           </div>
         `)}

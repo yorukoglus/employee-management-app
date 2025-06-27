@@ -1,4 +1,5 @@
 import { Router } from '@vaadin/router';
+import { i18n } from './i18n.js';
 
 export const navigation = {
   goToEmployeeList: () => {
@@ -30,12 +31,15 @@ export const navigation = {
 export const confirmations = {
   deleteEmployee: (employee) => {
     return window.confirm(
-      `Are you sure you want to delete ${employee.firstName} ${employee.lastName}? This action cannot be undone.`
+      i18n.t('deleteEmployeeConfirmOld', {
+        firstName: employee.firstName,
+        lastName: employee.lastName
+      })
     );
   },
   
   updateEmployee: () => {
-    return window.confirm('Are you sure you want to update this employee record?');
+    return window.confirm(i18n.t('updateEmployeeConfirm'));
   }
 };
 

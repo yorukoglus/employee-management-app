@@ -1,7 +1,8 @@
 import { LitElement, html } from 'lit';
 import { appNavStyles } from './app-nav.css.js';
+import { I18nMixin } from '../shared/i18n-mixin.js';
 
-export class AppNav extends LitElement {
+export class AppNav extends I18nMixin(LitElement) {
   static properties = {
     active: { type: String }, // e.g. 'list', 'add', 
     _mobileMenuOpen: { type: Boolean, state: true },
@@ -28,7 +29,12 @@ export class AppNav extends LitElement {
     this._mobileMenuOpen = !this._mobileMenuOpen;
   }
 
+  _switchLanguage(lang) {
+    this.setLanguage(lang);
+  }
+
   render() {
+    const currentLang = this.getCurrentLanguage();
     return html`
       <nav>
         <div class="logo-area">
@@ -44,8 +50,24 @@ export class AppNav extends LitElement {
         </button>
         
         <div class="nav-links ${this._mobileMenuOpen ? 'mobile-open' : ''}">
-          <a class="nav-link ${this.active === 'list' ? 'active' : ''}" @click=${() => this._navigate('list')} href="#">Employees</a>
-          <a class="nav-link ${this.active === 'add' ? 'active' : ''}" @click=${() => this._navigate('add')} href="#">Add New</a>
+          <a class="nav-link ${this.active === 'list' ? 'active' : ''}" @click=${() => this._navigate('list')} href="#">${this.t('employees')}</a>
+          <a class="nav-link ${this.active === 'add' ? 'active' : ''}" @click=${() => this._navigate('add')} href="#">${this.t('addNew')}</a>
+          <div class="language-switcher">
+            <button 
+              class="lang-btn ${currentLang === 'en' ? 'active' : ''}" 
+              @click=${() => this._switchLanguage('en')}
+              title="English"
+            >
+              EN
+            </button>
+            <button 
+              class="lang-btn ${currentLang === 'tr' ? 'active' : ''}" 
+              @click=${() => this._switchLanguage('tr')}
+              title="Türkçe"
+            >
+              TR
+            </button>
+          </div>
         </div>
       </nav>
     `;

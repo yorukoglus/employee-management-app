@@ -2,10 +2,11 @@ import { LitElement, html } from 'lit';
 import { pageStyles } from '../shared/page-styles.css.js';
 import { icons } from '../shared/icons.js';
 import { navigation, confirmations } from '../shared/utils.js';
+import { I18nMixin } from '../shared/i18n-mixin.js';
 import './employee-list.js';
 import { employeeService } from '../services/employee-service.js';
 
-export class EmployeeListPage extends LitElement {
+export class EmployeeListPage extends I18nMixin(LitElement) {
   static properties = {
     employees: { type: Array },
   };
@@ -58,7 +59,7 @@ export class EmployeeListPage extends LitElement {
     return html`
       <div class="page-header">
         ${icons.employeeList}
-        Employee List
+        ${this.t('employeeList')}
       </div>
       <employee-list 
         .employees=${this.employees}
