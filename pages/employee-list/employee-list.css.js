@@ -189,36 +189,23 @@ export const employeeListStyles = css`
   }
 
   /* Mobile Card View */
-  .mobile-card {
-    display: none;
-    background: #fff;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    border: 1px solid #f0f0f0;
-  }
-
   .mobile-card-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 12px;
   }
-
   .mobile-card-name {
     font-weight: 600;
     font-size: 16px;
     color: #222;
     margin-bottom: 4px;
   }
-
   .mobile-card-department {
     font-size: 14px;
     color: #ff6600;
     font-weight: 500;
   }
-
   .mobile-card-details {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -226,50 +213,23 @@ export const employeeListStyles = css`
     margin-bottom: 12px;
     font-size: 14px;
   }
-
   .mobile-card-detail {
     display: flex;
     flex-direction: column;
   }
-
   .mobile-card-label {
     font-size: 12px;
     color: #888;
     margin-bottom: 2px;
   }
-
   .mobile-card-value {
     color: #222;
     font-weight: 500;
   }
-
   .mobile-card-actions {
     display: flex;
     gap: 8px;
     justify-content: flex-end;
-  }
-
-  .mobile-action-btn {
-    background: #ff6600;
-    color: #fff;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .mobile-action-btn:hover {
-    background: #e65100;
-  }
-
-  .mobile-action-btn.delete {
-    background: #dc3545;
-  }
-
-  .mobile-action-btn.delete:hover {
-    background: #c82333;
   }
 
   /* Tablet responsive */
@@ -278,21 +238,17 @@ export const employeeListStyles = css`
       margin: 24px auto;
       padding: 24px 20px;
     }
-
     .search-bar {
       gap: 12px;
     }
-
     .search-input {
       min-width: 180px;
     }
-
     th, td {
       padding: 12px 8px;
       font-size: 14px;
     }
   }
-
   /* Mobile responsive */
   @media (max-width: 768px) {
     .employee-list-container {
@@ -300,75 +256,112 @@ export const employeeListStyles = css`
       padding: 20px 16px;
       border-radius: 12px;
     }
-
     .search-bar {
       flex-direction: column;
       align-items: stretch;
       gap: 12px;
     }
-
     .search-input {
       min-width: auto;
     }
-
     .search-info {
       text-align: center;
       white-space: normal;
     }
-
     /* Hide table on mobile */
     table {
       display: none;
     }
-
     /* Show mobile cards */
-    .mobile-card {
+    .card {
       display: block;
     }
-
     .pagination {
       gap: 6px;
       margin: 24px 0 0 0;
     }
-
     .page-number {
       padding: 8px 10px;
       font-size: 14px;
     }
   }
-
   /* Small mobile devices */
   @media (max-width: 480px) {
     .employee-list-container {
       margin: 12px auto;
       padding: 16px 12px;
     }
-
-    .mobile-card {
+    .card {
       padding: 12px;
     }
-
     .mobile-card-details {
       grid-template-columns: 1fr;
       gap: 6px;
     }
-
     .mobile-card-actions {
       flex-direction: column;
     }
-
-    .mobile-action-btn {
-      width: 100%;
-      padding: 10px;
-    }
-
     .pagination {
       gap: 4px;
     }
-
     .page-number {
       padding: 6px 8px;
       font-size: 13px;
     }
+  }
+  /* View mode toggle bar ve grid/card view CSS'i aşağıda devam ediyor */
+  .view-toggle-bar {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0 8px 0;
+  }
+  .view-toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s;
+    opacity: 0.6;
+  }
+  .view-toggle-btn.active,
+  .view-toggle-btn:hover {
+    background: #fff3e6;
+    opacity: 1;
+  }
+  .employee-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+    margin: 32px 0 0 0;
+  }
+  @media (min-width: 1100px) {
+    .employee-grid-container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  @media (max-width: 900px) {
+    .employee-grid-container {
+      grid-template-columns: 1fr;
+      gap: 20px 0;
+    }
+  }
+  .employee-card-row {
+    display: flex;
+    gap: 24px;
+    font-size: 15px;
+    color: #222;
+    margin-bottom: 2px;
+  }
+  .employee-card-row > div {
+    flex: 1;
+  }
+  .employee-card-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 10px;
   }
 `; 

@@ -71,37 +71,6 @@ export const confirmModalStyles = css`
     gap: 12px;
     justify-content: stretch;
   }
-  .proceed-btn {
-    background: #ff6600;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    padding: 10px 0;
-    flex: 1;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-  .proceed-btn:hover {
-    background: #e65100;
-  }
-  .cancel-btn {
-    background: #fff;
-    color: #3a237e;
-    border: 1.5px solid #3a237e;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    padding: 10px 0;
-    flex: 1;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
-  .cancel-btn:hover {
-    background: #f3f0ff;
-    color: #1a0e4a;
-  }
   @media (max-width: 480px) {
     .modal {
       min-width: 0;

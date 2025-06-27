@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { employeeListStyles } from './employee-list.css.js';
+import { commonStyles } from '../shared/common-styles.css.js';
 import '../components/confirm-modal/confirm-modal.js';
 
 export class EmployeeList extends LitElement {
@@ -11,9 +12,10 @@ export class EmployeeList extends LitElement {
     pageSize: { type: Number },
     _showDeleteModal: { type: Boolean, state: true },
     _employeeToDelete: { type: Object, state: true },
+    viewMode: { type: String, state: true }, // 'list' | 'grid'
   };
 
-  static styles = employeeListStyles;
+  static styles = [employeeListStyles, commonStyles];
 
   constructor() {
     super();
@@ -24,6 +26,7 @@ export class EmployeeList extends LitElement {
     this.pageSize = 5;
     this._showDeleteModal = false;
     this._employeeToDelete = null;
+    this.viewMode = 'list';
   }
 
   get filteredEmployees() {
@@ -111,11 +114,22 @@ export class EmployeeList extends LitElement {
     return window.innerWidth <= 768;
   }
 
+  _setViewMode(mode) {
+    this.viewMode = mode;
+  }
+
   render() {
     const filtered = this.filteredEmployees;
     const paginated = this.paginatedEmployees;
-    
     return html`
+      <div class="view-toggle-bar">
+        <button class="view-toggle-btn ${this.viewMode === 'list' ? 'active' : ''}" @click=${() => this._setViewMode('list')} title="List View">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="8" width="20" height="2" rx="1" fill="#ff6600"/><rect x="6" y="15" width="20" height="2" rx="1" fill="#ff6600"/><rect x="6" y="22" width="20" height="2" rx="1" fill="#ff6600"/></svg>
+        </button>
+        <button class="view-toggle-btn ${this.viewMode === 'grid' ? 'active' : ''}" @click=${() => this._setViewMode('grid')} title="Grid View">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="14" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="22" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="6" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="14" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="22" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/></svg>
+        </button>
+      </div>
       <div class="search-bar">
         <input 
           class="search-input"
@@ -134,7 +148,7 @@ export class EmployeeList extends LitElement {
         </label>
         <span class="search-info">Showing ${filtered.length} of ${this.employees.length} employees</span>
       </div>
-      ${this.isMobile ? this._renderMobileCards(paginated) : this._renderTable(paginated)}
+      ${this.viewMode === 'list' ? (this.isMobile ? this._renderMobileCards(paginated) : this._renderTable(paginated)) : this._renderGridCards(paginated)}
       <confirm-modal
         ?open=${this._showDeleteModal}
         .title=${"Are you sure?"}
@@ -198,7 +212,7 @@ export class EmployeeList extends LitElement {
     return html`
       <div class="employee-list-container">
         ${employees.map(emp => html`
-          <div class="mobile-card">
+          <div class="card">
             <div class="mobile-card-header">
               <div>
                 <div class="mobile-card-name">${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')} ${emp.lastName || (emp.name ? emp.name.split(' ')[1] || '' : '')}</div>
@@ -224,12 +238,40 @@ export class EmployeeList extends LitElement {
               </div>
             </div>
             <div class="mobile-card-actions">
-              <button class="mobile-action-btn" @click=${() => this._editEmployee(emp)}>
-                Edit
-              </button>
-              <button class="mobile-action-btn delete" @click=${() => this._deleteEmployee(emp)}>
-                Delete
-              </button>
+              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}>Edit</button>
+              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}>Delete</button>
+            </div>
+          </div>
+        `)}
+        ${this._renderPagination()}
+      </div>
+    `;
+  }
+
+  _renderGridCards(employees) {
+    return html`
+      <div class="employee-grid-container">
+        ${employees.map(emp => html`
+          <div class="card">
+            <div class="employee-card-row">
+              <div><b>First Name:</b> ${emp.firstName}</div>
+              <div><b>Last Name:</b> ${emp.lastName}</div>
+            </div>
+            <div class="employee-card-row">
+              <div><b>Date of Employment:</b> ${this._formatDate(emp.dateOfEmployment)}</div>
+              <div><b>Date of Birth:</b> ${this._formatDate(emp.dateOfBirth)}</div>
+            </div>
+            <div class="employee-card-row">
+              <div><b>Phone:</b> ${emp.phoneNumber}</div>
+              <div><b>Email:</b> ${emp.email}</div>
+            </div>
+            <div class="employee-card-row">
+              <div><b>Department:</b> ${emp.department}</div>
+              <div><b>Position:</b> ${emp.position}</div>
+            </div>
+            <div class="employee-card-actions">
+              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}><span class="icon">✏️</span> Edit</button>
+              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}><span class="icon">🗑️</span> Delete</button>
             </div>
           </div>
         `)}

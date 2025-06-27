@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { employeeFormStyles } from './employee-form.css.js';
+import { commonStyles } from '../shared/common-styles.css.js';
 import { confirmations } from '../shared/utils.js';
 
 export class EmployeeForm extends LitElement {
@@ -12,7 +13,7 @@ export class EmployeeForm extends LitElement {
     _editMode: { type: Boolean, state: true },
   };
 
-  static styles = employeeFormStyles;
+  static styles = [employeeFormStyles, commonStyles];
 
   constructor() {
     super();
@@ -240,8 +241,8 @@ export class EmployeeForm extends LitElement {
             ${this.errors.position ? html`<span class="error-message">${this.errors.position}</span>` : ''}
           </div>
           <div class="form-actions">
-            <button type="submit" class="save-btn">Save</button>
-            <button type="button" class="cancel-btn" @click=${this._navigateToList}>Cancel</button>
+            <button type="submit" class="btn btn-danger">Save</button>
+            <button type="button" class="btn btn-outline" @click=${this._navigateToList}>Cancel</button>
           </div>
         </form>
       </div>

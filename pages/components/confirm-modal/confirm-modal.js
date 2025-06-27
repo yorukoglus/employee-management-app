@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { confirmModalStyles } from './confirm-modal.css.js';
+import { commonStyles } from '../../shared/common-styles.css.js';
 
 export class ConfirmModal extends LitElement {
   static properties = {
@@ -8,7 +9,7 @@ export class ConfirmModal extends LitElement {
     message: { type: String },
   };
 
-  static styles = confirmModalStyles;
+  static styles = [confirmModalStyles, commonStyles];
 
   constructor() {
     super();
@@ -34,8 +35,8 @@ export class ConfirmModal extends LitElement {
         </div>
         <div class="modal-message">${this.message}</div>
         <div class="modal-actions">
-          <button class="proceed-btn" @click=${this._proceed}>Proceed</button>
-          <button class="cancel-btn" @click=${this._close}>Cancel</button>
+          <button class="btn btn-danger" @click=${this._proceed}>Proceed</button>
+          <button class="btn btn-outline" @click=${this._close}>Cancel</button>
         </div>
       </div>
     `;

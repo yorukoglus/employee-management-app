@@ -79,47 +79,12 @@ export const employeeFormStyles = css`
     gap: 32px;
     margin-top: 16px;
   }
-  .save-btn {
-    background-color: #ff6600;
-    color: #fff;
-    border: none;
-    padding: 12px 0;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    width: 220px;
-    transition: background 0.2s;
-  }
-  .save-btn:hover {
-    background-color: #e65100;
-  }
-  .cancel-btn {
-    background: #fff;
-    color: #3a237e;
-    border: 1.5px solid #3a237e;
-    padding: 12px 0;
-    border-radius: 6px;
-    font-size: 18px;
-    font-weight: 500;
-    cursor: pointer;
-    width: 220px;
-    transition: background 0.2s, color 0.2s;
-  }
-  .cancel-btn:hover {
-    background: #f3f0ff;
-    color: #1a0e4a;
-  }
   @media (max-width: 1100px) {
     .form-container {
       padding: 32px 12px 36px 12px;
     }
     form {
       gap: 24px 16px;
-    }
-    .save-btn, .cancel-btn {
-      width: 160px;
-      font-size: 16px;
     }
   }
   @media (max-width: 900px) {
@@ -149,10 +114,6 @@ export const employeeFormStyles = css`
       grid-column: 1 / span 1;
       flex-direction: column;
       gap: 16px;
-    }
-    .save-btn, .cancel-btn {
-      width: 100%;
-      font-size: 16px;
     }
   }
 `; 
