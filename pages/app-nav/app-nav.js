@@ -1,6 +1,8 @@
 import {LitElement, html} from 'lit';
 import {appNavStyles} from './app-nav.css.js';
 import {I18nMixin} from '../shared/i18n-mixin.js';
+import {menuSvg} from '../shared/svgs/menu.svg.js';
+import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
 export class AppNav extends I18nMixin(LitElement) {
   static properties = {
@@ -44,19 +46,7 @@ export class AppNav extends I18nMixin(LitElement) {
           <div class="logo-img">ING</div>
         </div>
         <button class="mobile-menu-toggle" @click=${this._toggleMobileMenu}>
-          <svg
-            width="24"
-            height="24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
+          ${unsafeSVG(menuSvg)}
         </button>
 
         <div class="nav-links ${this._mobileMenuOpen ? 'mobile-open' : ''}">

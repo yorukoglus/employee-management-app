@@ -3,6 +3,11 @@ import {employeeListStyles} from './employee-list.css.js';
 import {commonStyles} from '../shared/common-styles.css.js';
 import {I18nMixin} from '../shared/i18n-mixin.js';
 import '../components/confirm-modal/confirm-modal.js';
+import {listViewSvg} from '../shared/svgs/list-view.svg.js';
+import {gridViewSvg} from '../shared/svgs/grid-view.svg.js';
+import {editSvg} from '../shared/svgs/edit.svg.js';
+import {deleteSvg} from '../shared/svgs/delete.svg.js';
+import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
 export class EmployeeList extends I18nMixin(LitElement) {
   static properties = {
@@ -134,73 +139,14 @@ export class EmployeeList extends I18nMixin(LitElement) {
           @click=${() => this._setViewMode('list')}
           title=${this.t('listView')}
         >
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect x="6" y="8" width="20" height="2" rx="1" fill="#ff6600" />
-            <rect x="6" y="15" width="20" height="2" rx="1" fill="#ff6600" />
-            <rect x="6" y="22" width="20" height="2" rx="1" fill="#ff6600" />
-          </svg>
+          ${unsafeSVG(listViewSvg)}
         </button>
         <button
           class="view-toggle-btn ${this.viewMode === 'grid' ? 'active' : ''}"
           @click=${() => this._setViewMode('grid')}
           title=${this.t('gridView')}
         >
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-            <rect
-              x="6"
-              y="8"
-              width="4"
-              height="4"
-              rx="1"
-              fill="#ff6600"
-              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
-            />
-            <rect
-              x="14"
-              y="8"
-              width="4"
-              height="4"
-              rx="1"
-              fill="#ff6600"
-              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
-            />
-            <rect
-              x="22"
-              y="8"
-              width="4"
-              height="4"
-              rx="1"
-              fill="#ff6600"
-              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
-            />
-            <rect
-              x="6"
-              y="16"
-              width="4"
-              height="4"
-              rx="1"
-              fill="#ff6600"
-              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
-            />
-            <rect
-              x="14"
-              y="16"
-              width="4"
-              height="4"
-              rx="1"
-              fill="#ff6600"
-              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
-            />
-            <rect
-              x="22"
-              y="16"
-              width="4"
-              height="4"
-              rx="1"
-              fill="#ff6600"
-              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
-            />
-          </svg>
+          ${unsafeSVG(gridViewSvg)}
         </button>
       </div>
       <div class="search-bar">
@@ -293,41 +239,14 @@ export class EmployeeList extends I18nMixin(LitElement) {
                         title=${this.t('edit')}
                         @click=${() => this._editEmployee(emp)}
                       >
-                        <svg
-                          width="18"
-                          height="18"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M12 20h9" />
-                          <path
-                            d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"
-                          />
-                        </svg>
+                        ${unsafeSVG(editSvg)}
                       </button>
                       <button
                         class="icon-btn"
                         title=${this.t('delete')}
                         @click=${() => this._deleteEmployee(emp)}
                       >
-                        <svg
-                          width="18"
-                          height="18"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        >
-                          <path d="M3 6h18" />
-                          <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
-                          <path d="M10 11v6" />
-                          <path d="M14 11v6" />
-                          <path d="M5 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2" />
-                        </svg>
+                        ${unsafeSVG(deleteSvg)}
                       </button>
                     </div>
                   </td>
