@@ -5,13 +5,15 @@ const translations = {
     addNew: 'Add New',
     editEmployee: 'Edit Employee',
     addEmployee: 'Add Employee',
-    
+    employeeListTitle: 'Employee List',
+
     // Page titles
     employeeList: 'Employee List',
     pageNotFound: 'Page Not Found',
-    pageNotFoundSubtitle: "The page you're looking for doesn't exist or has been moved.",
+    pageNotFoundSubtitle:
+      "The page you're looking for doesn't exist or has been moved.",
     goToEmployeeList: 'Go to Employee List',
-    
+
     // Form labels and placeholders
     firstName: 'First Name',
     lastName: 'Last Name',
@@ -22,7 +24,7 @@ const translations = {
     department: 'Department',
     position: 'Position',
     pleaseSelect: 'Please Select',
-    
+
     // Form validation messages
     firstNameRequired: 'First name is required',
     firstNameMinLength: 'First name must be at least 2 characters',
@@ -38,7 +40,7 @@ const translations = {
     emailInvalid: 'Please enter a valid email address',
     departmentRequired: 'Department is required',
     positionRequired: 'Position is required',
-    
+
     // Buttons
     save: 'Save',
     cancel: 'Cancel',
@@ -46,55 +48,60 @@ const translations = {
     delete: 'Delete',
     proceed: 'Proceed',
     close: 'Close',
-    
+
     // Table headers
     actions: 'Actions',
-    
+
     // Search and pagination
     searchPlaceholder: 'Search by name, department, email, or phone...',
     pageSize: 'Page size:',
     showingOf: 'Showing {filtered} of {total} employees',
-    
+
     // View modes
     listView: 'List View',
     gridView: 'Grid View',
-    
+
     // Confirmation messages
     areYouSure: 'Are you sure?',
-    deleteEmployeeConfirm: 'Selected Employee record of {firstName} {lastName} will be deleted',
-    deleteEmployeeConfirmOld: 'Are you sure you want to delete {firstName} {lastName}? This action cannot be undone.',
-    updateEmployeeConfirm: 'Are you sure you want to update this employee record?',
-    
+    deleteEmployeeConfirm:
+      'Selected Employee record of {firstName} {lastName} will be deleted',
+    deleteEmployeeConfirmOld:
+      'Are you sure you want to delete {firstName} {lastName}? This action cannot be undone.',
+    updateEmployeeConfirm:
+      'Are you sure you want to update this employee record?',
+
     // Modal
     modalTitle: 'Are you sure?',
-    
+
     // Fallback 404
     fallback404Title: 'Page Not Found',
-    fallback404Subtitle: "The page you're looking for doesn't exist or has been moved.",
-    
+    fallback404Subtitle:
+      "The page you're looking for doesn't exist or has been moved.",
+
     // Departments
     analytics: 'Analytics',
     tech: 'Tech',
-    
+
     // Positions
     junior: 'Junior',
     medior: 'Medior',
-    senior: 'Senior'
+    senior: 'Senior',
   },
-  
+
   tr: {
     // Navigation
     employees: 'Çalışanlar',
     addNew: 'Yeni Ekle',
     editEmployee: 'Çalışan Düzenle',
     addEmployee: 'Çalışan Ekle',
-    
+    employeeListTitle: 'Çalışan Listesi',
+
     // Page titles
     employeeList: 'Çalışan Listesi',
     pageNotFound: 'Sayfa Bulunamadı',
     pageNotFoundSubtitle: 'Aradığınız sayfa mevcut değil veya taşınmış.',
     goToEmployeeList: 'Çalışan Listesine Git',
-    
+
     // Form labels and placeholders
     firstName: 'Ad',
     lastName: 'Soyad',
@@ -105,7 +112,7 @@ const translations = {
     department: 'Departman',
     position: 'Pozisyon',
     pleaseSelect: 'Lütfen Seçin',
-    
+
     // Form validation messages
     firstNameRequired: 'Ad gereklidir',
     firstNameMinLength: 'Ad en az 2 karakter olmalıdır',
@@ -121,7 +128,7 @@ const translations = {
     emailInvalid: 'Lütfen geçerli bir e-posta adresi girin',
     departmentRequired: 'Departman gereklidir',
     positionRequired: 'Pozisyon gereklidir',
-    
+
     // Buttons
     save: 'Kaydet',
     cancel: 'İptal',
@@ -129,41 +136,43 @@ const translations = {
     delete: 'Sil',
     proceed: 'Devam Et',
     close: 'Kapat',
-    
+
     // Table headers
     actions: 'İşlemler',
-    
+
     // Search and pagination
     searchPlaceholder: 'Ad, departman, e-posta veya telefon ile ara...',
     pageSize: 'Sayfa boyutu:',
     showingOf: '{filtered} / {total} çalışan gösteriliyor',
-    
+
     // View modes
     listView: 'Liste Görünümü',
     gridView: 'Grid Görünümü',
-    
+
     // Confirmation messages
     areYouSure: 'Emin misiniz?',
     deleteEmployeeConfirm: '{firstName} {lastName} çalışanının kaydı silinecek',
-    deleteEmployeeConfirmOld: '{firstName} {lastName} çalışanını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.',
-    updateEmployeeConfirm: 'Bu çalışan kaydını güncellemek istediğinizden emin misiniz?',
-    
+    deleteEmployeeConfirmOld:
+      '{firstName} {lastName} çalışanını silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.',
+    updateEmployeeConfirm:
+      'Bu çalışan kaydını güncellemek istediğinizden emin misiniz?',
+
     // Modal
     modalTitle: 'Emin misiniz?',
-    
+
     // Fallback 404
     fallback404Title: 'Sayfa Bulunamadı',
     fallback404Subtitle: 'Aradığınız sayfa mevcut değil veya taşınmış.',
-    
+
     // Departments
     analytics: 'Analitik',
     tech: 'Teknoloji',
-    
+
     // Positions
     junior: 'Junior',
     medior: 'Medior',
-    senior: 'Senior'
-  }
+    senior: 'Senior',
+  },
 };
 
 class I18nService {
@@ -178,13 +187,13 @@ class I18nService {
     if (htmlLang && (htmlLang === 'tr' || htmlLang === 'en')) {
       return htmlLang;
     }
-    
+
     // Fallback to browser language
     const browserLang = navigator.language || navigator.userLanguage;
     if (browserLang && browserLang.startsWith('tr')) {
       return 'tr';
     }
-    
+
     // Default to English
     return 'en';
   }
@@ -193,7 +202,10 @@ class I18nService {
     // Watch for changes in the HTML lang attribute
     const observer = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'lang') {
+        if (
+          mutation.type === 'attributes' &&
+          mutation.attributeName === 'lang'
+        ) {
           const newLang = document.documentElement.lang;
           if (newLang && (newLang === 'tr' || newLang === 'en')) {
             this.currentLanguage = newLang;
@@ -205,24 +217,27 @@ class I18nService {
 
     observer.observe(document.documentElement, {
       attributes: true,
-      attributeFilter: ['lang']
+      attributeFilter: ['lang'],
     });
   }
 
   _notifyLanguageChange() {
     // Dispatch a custom event to notify components of language change
-    window.dispatchEvent(new CustomEvent('languageChanged', {
-      detail: { language: this.currentLanguage }
-    }));
+    window.dispatchEvent(
+      new CustomEvent('languageChanged', {
+        detail: {language: this.currentLanguage},
+      })
+    );
   }
 
   t(key, params = {}) {
-    const translation = translations[this.currentLanguage]?.[key] || translations.en[key] || key;
-    
+    const translation =
+      translations[this.currentLanguage]?.[key] || translations.en[key] || key;
+
     if (Object.keys(params).length === 0) {
       return translation;
     }
-    
+
     // Replace placeholders like {firstName} with actual values
     return translation.replace(/\{(\w+)\}/g, (match, paramKey) => {
       return params[paramKey] || match;
@@ -251,4 +266,4 @@ class I18nService {
 export const i18n = new I18nService();
 
 // Export the service class for testing purposes
-export { I18nService }; 
+export {I18nService};

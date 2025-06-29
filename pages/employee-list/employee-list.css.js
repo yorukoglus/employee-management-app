@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const employeeListStyles = css`
   :host {
@@ -11,10 +11,10 @@ export const employeeListStyles = css`
   .employee-list-container {
     background: #fff;
     border-radius: 16px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     padding: 32px 24px;
-    margin: 32px auto;
-    max-width: 1200px;
+    margin-top: 32px;
+    width: 100%;
   }
 
   .search-bar {
@@ -65,7 +65,7 @@ export const employeeListStyles = css`
     background: #fff;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   }
 
   .table-header {
@@ -77,7 +77,8 @@ export const employeeListStyles = css`
     border-top-right-radius: 12px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 16px 12px;
     text-align: left;
     font-size: 15px;
@@ -108,7 +109,7 @@ export const employeeListStyles = css`
     text-align: center;
   }
 
-  input[type="checkbox"] {
+  input[type='checkbox'] {
     accent-color: #ff6600;
     width: 18px;
     height: 18px;
@@ -244,7 +245,8 @@ export const employeeListStyles = css`
     .search-input {
       min-width: 180px;
     }
-    th, td {
+    th,
+    td {
       padding: 12px 8px;
       font-size: 14px;
     }
@@ -364,4 +366,4 @@ export const employeeListStyles = css`
     gap: 16px;
     margin-top: 10px;
   }
-`; 
+`;

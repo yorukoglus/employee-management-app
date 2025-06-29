@@ -1,16 +1,15 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const appMainStyles = css`
   :host {
     display: block;
-    min-height: 100vh;
     background: #f5f5f5;
     font-family: 'Inter', Arial, sans-serif;
   }
 
   #outlet {
-    min-height: calc(100vh - 80px);
-    padding: 0;
+    min-height: 0;
+    padding: 0 40px;
   }
 
   /* Mobile responsive adjustments */
@@ -26,4 +25,4 @@ export const appMainStyles = css`
       padding: 0 4px;
     }
   }
-`; 
+`;

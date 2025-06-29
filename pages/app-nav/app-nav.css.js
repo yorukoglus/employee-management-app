@@ -1,14 +1,13 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const appNavStyles = css`
   :host {
     display: block;
     width: 100%;
     background: #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     border-bottom: 1.5px solid #f0f0f0;
     font-family: 'Inter', Arial, sans-serif;
-    position: sticky;
     top: 0;
     z-index: 1000;
   }
@@ -19,8 +18,14 @@ export const appNavStyles = css`
     justify-content: space-between;
     padding: 0 32px;
     height: 56px;
-    max-width: 1200px;
-    margin: 0 auto;
+  }
+
+  .nav-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #ff6600;
+    margin-left: 18px;
+    letter-spacing: 0.5px;
   }
 
   .nav-links {
@@ -43,7 +48,8 @@ export const appNavStyles = css`
     cursor: pointer;
   }
 
-  .nav-link.active, .nav-link:hover {
+  .nav-link.active,
+  .nav-link:hover {
     background: #ffe5d0;
     color: #e65100;
     text-decoration: underline;
@@ -148,7 +154,7 @@ export const appNavStyles = css`
       background: #fff;
       flex-direction: column;
       gap: 0;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       transform: translateY(-100%);
       opacity: 0;
       visibility: hidden;
@@ -175,7 +181,8 @@ export const appNavStyles = css`
       border-bottom: none;
     }
 
-    .nav-link.active, .nav-link:hover {
+    .nav-link.active,
+    .nav-link:hover {
       background: #ffe5d0;
       color: #e65100;
     }
@@ -212,4 +219,4 @@ export const appNavStyles = css`
       top: 56px;
     }
   }
-`; 
+`;

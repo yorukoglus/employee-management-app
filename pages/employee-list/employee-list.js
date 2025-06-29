@@ -1,19 +1,19 @@
-import { LitElement, html } from 'lit';
-import { employeeListStyles } from './employee-list.css.js';
-import { commonStyles } from '../shared/common-styles.css.js';
-import { I18nMixin } from '../shared/i18n-mixin.js';
+import {LitElement, html} from 'lit';
+import {employeeListStyles} from './employee-list.css.js';
+import {commonStyles} from '../shared/common-styles.css.js';
+import {I18nMixin} from '../shared/i18n-mixin.js';
 import '../components/confirm-modal/confirm-modal.js';
 
 export class EmployeeList extends I18nMixin(LitElement) {
   static properties = {
-    employees: { type: Array },
-    view: { type: String },
-    search: { type: String },
-    page: { type: Number },
-    pageSize: { type: Number },
-    _showDeleteModal: { type: Boolean, state: true },
-    _employeeToDelete: { type: Object, state: true },
-    viewMode: { type: String, state: true }, // 'list' | 'grid'
+    employees: {type: Array},
+    view: {type: String},
+    search: {type: String},
+    page: {type: Number},
+    pageSize: {type: Number},
+    _showDeleteModal: {type: Boolean, state: true},
+    _employeeToDelete: {type: Object, state: true},
+    viewMode: {type: String, state: true}, // 'list' | 'grid'
   };
 
   static styles = [employeeListStyles, commonStyles];
@@ -34,15 +34,16 @@ export class EmployeeList extends I18nMixin(LitElement) {
     if (!this.search.trim()) {
       return this.employees;
     }
-    
+
     const searchTerm = this.search.toLowerCase();
-    return this.employees.filter(emp => 
-      emp.name.toLowerCase().includes(searchTerm) ||
-      emp.department.toLowerCase().includes(searchTerm) ||
-      emp.email.toLowerCase().includes(searchTerm) ||
-      (emp.firstName && emp.firstName.toLowerCase().includes(searchTerm)) ||
-      (emp.lastName && emp.lastName.toLowerCase().includes(searchTerm)) ||
-      (emp.phoneNumber && emp.phoneNumber.includes(searchTerm))
+    return this.employees.filter(
+      (emp) =>
+        emp.name.toLowerCase().includes(searchTerm) ||
+        emp.department.toLowerCase().includes(searchTerm) ||
+        emp.email.toLowerCase().includes(searchTerm) ||
+        (emp.firstName && emp.firstName.toLowerCase().includes(searchTerm)) ||
+        (emp.lastName && emp.lastName.toLowerCase().includes(searchTerm)) ||
+        (emp.phoneNumber && emp.phoneNumber.includes(searchTerm))
     );
   }
 
@@ -77,11 +78,13 @@ export class EmployeeList extends I18nMixin(LitElement) {
   }
 
   _editEmployee(employee) {
-    this.dispatchEvent(new CustomEvent('edit-employee', {
-      detail: employee,
-      bubbles: true,
-      composed: true
-    }));
+    this.dispatchEvent(
+      new CustomEvent('edit-employee', {
+        detail: employee,
+        bubbles: true,
+        composed: true,
+      })
+    );
   }
 
   _deleteEmployee(employee) {
@@ -96,11 +99,13 @@ export class EmployeeList extends I18nMixin(LitElement) {
 
   _handleModalProceed() {
     if (this._employeeToDelete) {
-      this.dispatchEvent(new CustomEvent('delete-employee', {
-        detail: this._employeeToDelete,
-        bubbles: true,
-        composed: true
-      }));
+      this.dispatchEvent(
+        new CustomEvent('delete-employee', {
+          detail: this._employeeToDelete,
+          bubbles: true,
+          composed: true,
+        })
+      );
     }
     this._showDeleteModal = false;
     this._employeeToDelete = null;
@@ -124,36 +129,121 @@ export class EmployeeList extends I18nMixin(LitElement) {
     const paginated = this.paginatedEmployees;
     return html`
       <div class="view-toggle-bar">
-        <button class="view-toggle-btn ${this.viewMode === 'list' ? 'active' : ''}" @click=${() => this._setViewMode('list')} title=${this.t('listView')}>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="8" width="20" height="2" rx="1" fill="#ff6600"/><rect x="6" y="15" width="20" height="2" rx="1" fill="#ff6600"/><rect x="6" y="22" width="20" height="2" rx="1" fill="#ff6600"/></svg>
+        <button
+          class="view-toggle-btn ${this.viewMode === 'list' ? 'active' : ''}"
+          @click=${() => this._setViewMode('list')}
+          title=${this.t('listView')}
+        >
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect x="6" y="8" width="20" height="2" rx="1" fill="#ff6600" />
+            <rect x="6" y="15" width="20" height="2" rx="1" fill="#ff6600" />
+            <rect x="6" y="22" width="20" height="2" rx="1" fill="#ff6600" />
+          </svg>
         </button>
-        <button class="view-toggle-btn ${this.viewMode === 'grid' ? 'active' : ''}" @click=${() => this._setViewMode('grid')} title=${this.t('gridView')}>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect x="6" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="14" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="22" y="8" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="6" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="14" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/><rect x="22" y="16" width="4" height="4" rx="1" fill="#ff6600" opacity="${this.viewMode === 'grid' ? 1 : 0.3}"/></svg>
+        <button
+          class="view-toggle-btn ${this.viewMode === 'grid' ? 'active' : ''}"
+          @click=${() => this._setViewMode('grid')}
+          title=${this.t('gridView')}
+        >
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <rect
+              x="6"
+              y="8"
+              width="4"
+              height="4"
+              rx="1"
+              fill="#ff6600"
+              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
+            />
+            <rect
+              x="14"
+              y="8"
+              width="4"
+              height="4"
+              rx="1"
+              fill="#ff6600"
+              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
+            />
+            <rect
+              x="22"
+              y="8"
+              width="4"
+              height="4"
+              rx="1"
+              fill="#ff6600"
+              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
+            />
+            <rect
+              x="6"
+              y="16"
+              width="4"
+              height="4"
+              rx="1"
+              fill="#ff6600"
+              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
+            />
+            <rect
+              x="14"
+              y="16"
+              width="4"
+              height="4"
+              rx="1"
+              fill="#ff6600"
+              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
+            />
+            <rect
+              x="22"
+              y="16"
+              width="4"
+              height="4"
+              rx="1"
+              fill="#ff6600"
+              opacity="${this.viewMode === 'grid' ? 1 : 0.3}"
+            />
+          </svg>
         </button>
       </div>
       <div class="search-bar">
-        <input 
+        <input
           class="search-input"
-          type="text" 
+          type="text"
           placeholder=${this.t('searchPlaceholder')}
-          @input=${e => this.search = e.target.value}
+          @input=${(e) => (this.search = e.target.value)}
           value=${this.search}
         />
         <label>
           ${this.t('pageSize')}
-          <select class="page-size-select" @change=${this._changePageSize} .value=${this.pageSize}>
+          <select
+            class="page-size-select"
+            @change=${this._changePageSize}
+            .value=${this.pageSize}
+          >
             <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
           </select>
         </label>
-        <span class="search-info">${this.t('showingOf', { filtered: filtered.length, total: this.employees.length })}</span>
+        <span class="search-info"
+          >${this.t('showingOf', {
+            filtered: filtered.length,
+            total: this.employees.length,
+          })}</span
+        >
       </div>
-      ${this.viewMode === 'list' ? (this.isMobile ? this._renderMobileCards(paginated) : this._renderTable(paginated)) : this._renderGridCards(paginated)}
+      ${this.viewMode === 'list'
+        ? this.isMobile
+          ? this._renderMobileCards(paginated)
+          : this._renderTable(paginated)
+        : this._renderGridCards(paginated)}
       <confirm-modal
         ?open=${this._showDeleteModal}
         .title=${this.t('modalTitle')}
-        .message=${this._employeeToDelete ? this.t('deleteEmployeeConfirm', { firstName: this._employeeToDelete.firstName, lastName: this._employeeToDelete.lastName }) : ''}
+        .message=${this._employeeToDelete
+          ? this.t('deleteEmployeeConfirm', {
+              firstName: this._employeeToDelete.firstName,
+              lastName: this._employeeToDelete.lastName,
+            })
+          : ''}
         @cancel=${this._handleModalCancel}
         @proceed=${this._handleModalProceed}
       ></confirm-modal>
@@ -179,29 +269,71 @@ export class EmployeeList extends I18nMixin(LitElement) {
             </tr>
           </thead>
           <tbody>
-            ${employees.map(emp => html`
-              <tr>
-                <td class="checkbox-cell"><input type="checkbox" /></td>
-                <td>${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')}</td>
-                <td>${emp.lastName || (emp.name ? emp.name.split(' ')[1] || '' : '')}</td>
-                <td>${this._formatDate(emp.dateOfEmployment)}</td>
-                <td>${this._formatDate(emp.dateOfBirth)}</td>
-                <td>${emp.phoneNumber || '-'}</td>
-                <td>${emp.email}</td>
-                <td>${emp.department || '-'}</td>
-                <td>${emp.position || '-'}</td>
-                <td>
-                  <div class="action-icons">
-                    <button class="icon-btn" title=${this.t('edit')} @click=${() => this._editEmployee(emp)}>
-                      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg>
-                    </button>
-                    <button class="icon-btn" title=${this.t('delete')} @click=${() => this._deleteEmployee(emp)}>
-                      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M5 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/></svg>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            `)}
+            ${employees.map(
+              (emp) => html`
+                <tr>
+                  <td class="checkbox-cell"><input type="checkbox" /></td>
+                  <td>
+                    ${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')}
+                  </td>
+                  <td>
+                    ${emp.lastName ||
+                    (emp.name ? emp.name.split(' ')[1] || '' : '')}
+                  </td>
+                  <td>${this._formatDate(emp.dateOfEmployment)}</td>
+                  <td>${this._formatDate(emp.dateOfBirth)}</td>
+                  <td>${emp.phoneNumber || '-'}</td>
+                  <td>${emp.email}</td>
+                  <td>${emp.department || '-'}</td>
+                  <td>${emp.position || '-'}</td>
+                  <td>
+                    <div class="action-icons">
+                      <button
+                        class="icon-btn"
+                        title=${this.t('edit')}
+                        @click=${() => this._editEmployee(emp)}
+                      >
+                        <svg
+                          width="18"
+                          height="18"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M12 20h9" />
+                          <path
+                            d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"
+                          />
+                        </svg>
+                      </button>
+                      <button
+                        class="icon-btn"
+                        title=${this.t('delete')}
+                        @click=${() => this._deleteEmployee(emp)}
+                      >
+                        <svg
+                          width="18"
+                          height="18"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        >
+                          <path d="M3 6h18" />
+                          <path d="M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6" />
+                          <path d="M10 11v6" />
+                          <path d="M14 11v6" />
+                          <path d="M5 6V4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2" />
+                        </svg>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              `
+            )}
           </tbody>
         </table>
         ${this._renderPagination()}
@@ -212,38 +344,63 @@ export class EmployeeList extends I18nMixin(LitElement) {
   _renderMobileCards(employees) {
     return html`
       <div class="employee-list-container">
-        ${employees.map(emp => html`
-          <div class="card">
-            <div class="mobile-card-header">
-              <div>
-                <div class="mobile-card-name">${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')} ${emp.lastName || (emp.name ? emp.name.split(' ')[1] || '' : '')}</div>
-                <div class="mobile-card-department">${emp.department || 'No Department'}</div>
+        ${employees.map(
+          (emp) => html`
+            <div class="card">
+              <div class="mobile-card-header">
+                <div>
+                  <div class="mobile-card-name">
+                    ${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')}
+                    ${emp.lastName ||
+                    (emp.name ? emp.name.split(' ')[1] || '' : '')}
+                  </div>
+                  <div class="mobile-card-department">
+                    ${emp.department || 'No Department'}
+                  </div>
+                </div>
+              </div>
+              <div class="mobile-card-details">
+                <div class="mobile-card-detail">
+                  <span class="mobile-card-label">${this.t('email')}</span>
+                  <span class="mobile-card-value">${emp.email}</span>
+                </div>
+                <div class="mobile-card-detail">
+                  <span class="mobile-card-label">${this.t('phone')}</span>
+                  <span class="mobile-card-value"
+                    >${emp.phoneNumber || 'No phone'}</span
+                  >
+                </div>
+                <div class="mobile-card-detail">
+                  <span class="mobile-card-label">${this.t('position')}</span>
+                  <span class="mobile-card-value"
+                    >${emp.position || 'No position'}</span
+                  >
+                </div>
+                <div class="mobile-card-detail">
+                  <span class="mobile-card-label">Employed</span>
+                  <span class="mobile-card-value"
+                    >${this._formatDate(emp.dateOfEmployment) ||
+                    'Not specified'}</span
+                  >
+                </div>
+              </div>
+              <div class="mobile-card-actions">
+                <button
+                  class="btn btn-primary"
+                  @click=${() => this._editEmployee(emp)}
+                >
+                  ${this.t('edit')}
+                </button>
+                <button
+                  class="btn btn-danger"
+                  @click=${() => this._deleteEmployee(emp)}
+                >
+                  ${this.t('delete')}
+                </button>
               </div>
             </div>
-            <div class="mobile-card-details">
-              <div class="mobile-card-detail">
-                <span class="mobile-card-label">${this.t('email')}</span>
-                <span class="mobile-card-value">${emp.email}</span>
-              </div>
-              <div class="mobile-card-detail">
-                <span class="mobile-card-label">${this.t('phone')}</span>
-                <span class="mobile-card-value">${emp.phoneNumber || 'No phone'}</span>
-              </div>
-              <div class="mobile-card-detail">
-                <span class="mobile-card-label">${this.t('position')}</span>
-                <span class="mobile-card-value">${emp.position || 'No position'}</span>
-              </div>
-              <div class="mobile-card-detail">
-                <span class="mobile-card-label">Employed</span>
-                <span class="mobile-card-value">${this._formatDate(emp.dateOfEmployment) || 'Not specified'}</span>
-              </div>
-            </div>
-            <div class="mobile-card-actions">
-              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}>${this.t('edit')}</button>
-              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}>${this.t('delete')}</button>
-            </div>
-          </div>
-        `)}
+          `
+        )}
         ${this._renderPagination()}
       </div>
     `;
@@ -252,30 +409,50 @@ export class EmployeeList extends I18nMixin(LitElement) {
   _renderGridCards(employees) {
     return html`
       <div class="employee-grid-container">
-        ${employees.map(emp => html`
-          <div class="card">
-            <div class="employee-card-row">
-              <div><b>${this.t('firstName')}:</b> ${emp.firstName}</div>
-              <div><b>${this.t('lastName')}:</b> ${emp.lastName}</div>
+        ${employees.map(
+          (emp) => html`
+            <div class="card">
+              <div class="employee-card-row">
+                <div><b>${this.t('firstName')}:</b> ${emp.firstName}</div>
+                <div><b>${this.t('lastName')}:</b> ${emp.lastName}</div>
+              </div>
+              <div class="employee-card-row">
+                <div>
+                  <b>${this.t('dateOfEmployment')}:</b> ${this._formatDate(
+                    emp.dateOfEmployment
+                  )}
+                </div>
+                <div>
+                  <b>${this.t('dateOfBirth')}:</b> ${this._formatDate(
+                    emp.dateOfBirth
+                  )}
+                </div>
+              </div>
+              <div class="employee-card-row">
+                <div><b>${this.t('phone')}:</b> ${emp.phoneNumber}</div>
+                <div><b>${this.t('email')}:</b> ${emp.email}</div>
+              </div>
+              <div class="employee-card-row">
+                <div><b>${this.t('department')}:</b> ${emp.department}</div>
+                <div><b>${this.t('position')}:</b> ${emp.position}</div>
+              </div>
+              <div class="employee-card-actions">
+                <button
+                  class="btn btn-primary"
+                  @click=${() => this._editEmployee(emp)}
+                >
+                  <span class="icon">✏️</span> ${this.t('edit')}
+                </button>
+                <button
+                  class="btn btn-danger"
+                  @click=${() => this._deleteEmployee(emp)}
+                >
+                  <span class="icon">🗑️</span> ${this.t('delete')}
+                </button>
+              </div>
             </div>
-            <div class="employee-card-row">
-              <div><b>${this.t('dateOfEmployment')}:</b> ${this._formatDate(emp.dateOfEmployment)}</div>
-              <div><b>${this.t('dateOfBirth')}:</b> ${this._formatDate(emp.dateOfBirth)}</div>
-            </div>
-            <div class="employee-card-row">
-              <div><b>${this.t('phone')}:</b> ${emp.phoneNumber}</div>
-              <div><b>${this.t('email')}:</b> ${emp.email}</div>
-            </div>
-            <div class="employee-card-row">
-              <div><b>${this.t('department')}:</b> ${emp.department}</div>
-              <div><b>${this.t('position')}:</b> ${emp.position}</div>
-            </div>
-            <div class="employee-card-actions">
-              <button class="btn btn-primary" @click=${() => this._editEmployee(emp)}><span class="icon">✏️</span> ${this.t('edit')}</button>
-              <button class="btn btn-danger" @click=${() => this._deleteEmployee(emp)}><span class="icon">🗑️</span> ${this.t('delete')}</button>
-            </div>
-          </div>
-        `)}
+          `
+        )}
         ${this._renderPagination()}
       </div>
     `;
@@ -296,13 +473,32 @@ export class EmployeeList extends I18nMixin(LitElement) {
     }
     return html`
       <div class="pagination">
-        <button class="pagination-btn" @click=${this._previousPage} ?disabled=${this.page <= 1}>&lt;</button>
+        <button
+          class="pagination-btn"
+          @click=${this._previousPage}
+          ?disabled=${this.page <= 1}
+        >
+          &lt;
+        </button>
         ${start > 1 ? html`<span>...</span>` : ''}
-        ${pageNumbers.map(num => html`
-          <button class="page-number ${this.page === num ? 'active' : ''}" @click=${() => this._goToPage(num)}>${num}</button>
-        `)}
+        ${pageNumbers.map(
+          (num) => html`
+            <button
+              class="page-number ${this.page === num ? 'active' : ''}"
+              @click=${() => this._goToPage(num)}
+            >
+              ${num}
+            </button>
+          `
+        )}
         ${end < totalPages ? html`<span>...</span>` : ''}
-        <button class="pagination-btn" @click=${this._nextPage} ?disabled=${this.page >= totalPages}>&gt;</button>
+        <button
+          class="pagination-btn"
+          @click=${this._nextPage}
+          ?disabled=${this.page >= totalPages}
+        >
+          &gt;
+        </button>
       </div>
     `;
   }
@@ -322,4 +518,4 @@ export class EmployeeList extends I18nMixin(LitElement) {
   }
 }
 
-customElements.define('employee-list', EmployeeList); 
+customElements.define('employee-list', EmployeeList);

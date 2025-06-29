@@ -1,4 +1,4 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const pageStyles = css`
   :host {
@@ -11,12 +11,9 @@ export const pageStyles = css`
     align-items: center;
     gap: 12px;
     padding: 24px 32px;
-    background: white;
-    border-bottom: 1px solid #e0e0e0;
     font-size: 24px;
     font-weight: 600;
     color: #333;
-    max-width: 1200px;
     margin: 0 auto;
   }
 
@@ -66,4 +63,4 @@ export const pageStyles = css`
       padding: 12px 8px;
     }
   }
-`; 
+`;

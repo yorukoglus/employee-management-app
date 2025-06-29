@@ -1,7 +1,7 @@
-import { LitElement, html } from 'lit';
-import { Router } from '@vaadin/router';
-import { appMainStyles } from './app-main.css.js';
-import { navigation } from '../shared/utils.js';
+import {LitElement, html} from 'lit';
+import {Router} from '@vaadin/router';
+import {appMainStyles} from './app-main.css.js';
+import {navigation} from '../shared/utils.js';
 import '../app-nav/app-nav.js';
 import '../employee-list/employee-list-page.js';
 import '../employee-form/employee-form-page.js';
@@ -9,7 +9,7 @@ import '../not-found-page/not-found-page.js';
 
 export class AppMain extends LitElement {
   static properties = {
-    currentRoute: { type: String },
+    currentRoute: {type: String},
   };
 
   static styles = appMainStyles;
@@ -25,37 +25,33 @@ export class AppMain extends LitElement {
   }
 
   _setupRouter() {
-    this.router = new Router(this.shadowRoot.querySelector('#outlet'));
-    
+    this.router = new Router(this.renderRoot.querySelector('#outlet'));
+
     this.router.setRoutes([
       {
         path: '/',
-        redirect: '/employees'
+        redirect: '/employees',
       },
       {
         path: '/employees',
-        component: 'employee-list-page'
+        component: 'employee-list-page',
       },
       {
         path: '/employees/add',
-        component: 'employee-form-page'
+        component: 'employee-form-page',
       },
       {
         path: '/employees/edit/:id',
-        component: 'employee-form-page'
+        component: 'employee-form-page',
       },
       {
         path: '(.*)',
-        component: 'not-found-page'
-      }
+        component: 'not-found-page',
+      },
     ]);
 
     this.router.subscribe((location) => {
       this.currentRoute = location.pathname;
-    });
-
-    this.router.addEventListener('vaadin-router-error', (event) => {
-      console.error('Router error:', event.detail);
     });
   }
 
@@ -70,10 +66,7 @@ export class AppMain extends LitElement {
 
   render() {
     return html`
-      <app-nav 
-        .active=${this._getActiveNav()} 
-        @navigate=${this._handleNav}
-      ></app-nav>
+      <app-nav @navigate=${this._handleNav}></app-nav>
       <div id="outlet"></div>
     `;
   }
@@ -90,4 +83,4 @@ export class AppMain extends LitElement {
   }
 }
 
-customElements.define('app-main', AppMain); 
+customElements.define('app-main', AppMain);
