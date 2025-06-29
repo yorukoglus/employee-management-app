@@ -4,7 +4,6 @@ export const employeeFormStyles = css`
   :host {
     display: block;
     background: #fafafa;
-    min-height: 100vh;
   }
   .form-container {
     max-width: 92vw;

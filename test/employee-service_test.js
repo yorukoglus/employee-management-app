@@ -4,8 +4,20 @@ import sinon from 'sinon';
 
 suite('employee-service', () => {
   let originalDateNow;
+  let localStorageStub;
 
   setup(() => {
+    localStorageStub = {
+      getItem: sinon.stub(),
+      setItem: sinon.stub(),
+      removeItem: sinon.stub(),
+    };
+
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageStub,
+      writable: true,
+    });
+
     // Reset service to initial state
     employeeService.employees = [];
     employeeService.listeners = [];
@@ -17,6 +29,7 @@ suite('employee-service', () => {
 
   teardown(() => {
     Date.now = originalDateNow;
+    delete window.localStorage;
   });
 
   test('is defined', () => {
@@ -247,5 +260,93 @@ suite('employee-service', () => {
 
     assert.isTrue(listener1.called);
     assert.equal(employeeService.listeners.length, 1);
+  });
+
+  test('addEmployee adds employee to beginning of array', () => {
+    const employee1 = {name: 'John Doe'};
+    const employee2 = {name: 'Jane Smith'};
+
+    employeeService.addEmployee(employee1);
+    employeeService.addEmployee(employee2);
+
+    assert.equal(employeeService.employees.length, 2);
+    assert.equal(employeeService.employees[0].name, 'Jane Smith');
+    assert.equal(employeeService.employees[1].name, 'John Doe');
+  });
+
+  test('addEmployee saves to localStorage', () => {
+    const employee = {name: 'John Doe'};
+
+    employeeService.addEmployee(employee);
+
+    assert.isTrue(localStorageStub.setItem.called);
+    assert.equal(localStorageStub.setItem.firstCall.args[0], 'employees');
+  });
+
+  test('updateEmployee saves to localStorage', () => {
+    const employee = {id: 1, name: 'John Doe'};
+    employeeService.employees.push(employee);
+
+    employeeService.updateEmployee({id: 1, name: 'John Smith'});
+
+    assert.isTrue(localStorageStub.setItem.called);
+    assert.equal(localStorageStub.setItem.firstCall.args[0], 'employees');
+  });
+
+  test('deleteEmployee saves to localStorage', () => {
+    const employee = {id: 1, name: 'John Doe'};
+    employeeService.employees.push(employee);
+
+    employeeService.deleteEmployee(1);
+
+    assert.isTrue(localStorageStub.setItem.called);
+    assert.equal(localStorageStub.setItem.firstCall.args[0], 'employees');
+  });
+
+  test('loads employees from localStorage when available', async () => {
+    const savedEmployees = [
+      {id: 1, name: 'John Doe'},
+      {id: 2, name: 'Jane Smith'},
+    ];
+    localStorageStub.getItem.returns(JSON.stringify(savedEmployees));
+
+    // Create a new service instance to test loading
+    const {employeeService: newService} = await import(
+      '../pages/services/employee-service.js'
+    );
+
+    assert.equal(newService.employees.length, 2);
+    assert.equal(newService.employees[0].name, 'John Doe');
+  });
+
+  test('loads default employees when localStorage is empty', async () => {
+    localStorageStub.getItem.returns(null);
+
+    // Create a new service instance to test loading
+    const {employeeService: newService} = await import(
+      '../pages/services/employee-service.js'
+    );
+
+    assert.isTrue(newService.employees.length > 0);
+  });
+
+  test('resetToDefault resets to mock employees', () => {
+    const employee = {name: 'John Doe'};
+    employeeService.addEmployee(employee);
+
+    employeeService.resetToDefault();
+
+    assert.isTrue(localStorageStub.setItem.called);
+    assert.equal(employeeService.employees.length, 200); // Default mock employees count
+  });
+
+  test('clearAll removes all employees', () => {
+    const employee = {name: 'John Doe'};
+    employeeService.addEmployee(employee);
+
+    employeeService.clearAll();
+
+    assert.equal(employeeService.employees.length, 0);
+    assert.isTrue(localStorageStub.setItem.called);
   });
 });

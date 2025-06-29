@@ -9,7 +9,7 @@ export const appMainStyles = css`
   #outlet {
     min-height: 0;
     padding: 0 40px;
-    height: calc(100vh - 57px);
+    height: calc(100vh - 65px);
   }
 
   /* Mobile responsive adjustments */

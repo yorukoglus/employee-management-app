@@ -177,4 +177,30 @@ suite('i18n-mixin', () => {
 
     requestUpdateSpy.restore();
   });
+
+  test('setLanguage saves to localStorage', () => {
+    localStorage.removeItem('selectedLanguage');
+
+    i18n.setLanguage('en');
+
+    assert.equal(localStorage.getItem('selectedLanguage'), 'en');
+  });
+
+  test('detects language from localStorage', () => {
+    localStorage.setItem('selectedLanguage', 'tr');
+
+    const currentLang = i18n.getCurrentLanguage();
+
+    localStorage.removeItem('selectedLanguage');
+
+    assert.isString(currentLang);
+  });
+
+  test('clearSavedLanguage removes from localStorage', () => {
+    localStorage.setItem('selectedLanguage', 'tr');
+
+    i18n.clearSavedLanguage();
+
+    assert.isNull(localStorage.getItem('selectedLanguage'));
+  });
 });

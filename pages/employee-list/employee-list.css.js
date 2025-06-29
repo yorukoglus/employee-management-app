@@ -264,9 +264,10 @@ export const employeeListStyles = css`
       margin: 16px auto;
       padding: 20px 16px;
       border-radius: 12px;
+      height: calc(100vh - 330px);
+      overflow: auto;
     }
     .search-bar {
-      flex-direction: column;
       align-items: stretch;
       gap: 12px;
     }
@@ -299,6 +300,8 @@ export const employeeListStyles = css`
     .employee-list-container {
       margin: 12px auto;
       padding: 16px 12px;
+      height: calc(100vh - 300px);
+      overflow: auto;
     }
     .card {
       padding: 12px;

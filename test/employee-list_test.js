@@ -346,7 +346,14 @@ suite('employee-list-page', () => {
     assert.instanceOf(el, EmployeeListPage);
   });
 
-  test('renders with default structure', () => {
+  test('renders with default structure', async () => {
+    const i18n = await import('../pages/shared/i18n.js');
+    i18n.i18n.setLanguage('tr');
+
+    pageElement = await fixture(
+      html`<employee-list-page></employee-list-page>`
+    );
+
     assert.shadowDom.equal(
       pageElement,
       `
@@ -369,7 +376,9 @@ suite('employee-list-page', () => {
   });
 
   test('connectedCallback subscribes to employee service', () => {
-    const subscribeStub = sinon.stub(employeeService, 'subscribe');
+    const subscribeStub = sinon
+      .stub(employeeService, 'subscribe')
+      .returns(() => {});
 
     pageElement.connectedCallback();
 

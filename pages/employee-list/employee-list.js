@@ -274,64 +274,67 @@ export class EmployeeList extends I18nMixin(LitElement) {
 
   _renderMobileCards(employees) {
     return html`
-      <div class="employee-list-container">
-        ${employees.map(
-          (emp) => html`
-            <div class="card">
-              <div class="mobile-card-header">
-                <div>
-                  <div class="mobile-card-name">
-                    ${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')}
-                    ${emp.lastName ||
-                    (emp.name ? emp.name.split(' ')[1] || '' : '')}
+      <div>
+        <div class="employee-list-container">
+          ${employees.map(
+            (emp) => html`
+              <div class="card">
+                <div class="mobile-card-header">
+                  <div>
+                    <div class="mobile-card-name">
+                      ${emp.firstName ||
+                      (emp.name ? emp.name.split(' ')[0] : '')}
+                      ${emp.lastName ||
+                      (emp.name ? emp.name.split(' ')[1] || '' : '')}
+                    </div>
+                    <div class="mobile-card-department">
+                      ${emp.department || 'No Department'}
+                    </div>
                   </div>
-                  <div class="mobile-card-department">
-                    ${emp.department || 'No Department'}
+                </div>
+                <div class="mobile-card-details">
+                  <div class="mobile-card-detail">
+                    <span class="mobile-card-label">${this.t('email')}</span>
+                    <span class="mobile-card-value">${emp.email}</span>
+                  </div>
+                  <div class="mobile-card-detail">
+                    <span class="mobile-card-label">${this.t('phone')}</span>
+                    <span class="mobile-card-value"
+                      >${emp.phoneNumber || 'No phone'}</span
+                    >
+                  </div>
+                  <div class="mobile-card-detail">
+                    <span class="mobile-card-label">${this.t('position')}</span>
+                    <span class="mobile-card-value"
+                      >${emp.position || 'No position'}</span
+                    >
+                  </div>
+                  <div class="mobile-card-detail">
+                    <span class="mobile-card-label">Employed</span>
+                    <span class="mobile-card-value"
+                      >${this._formatDate(emp.dateOfEmployment) ||
+                      'Not specified'}</span
+                    >
                   </div>
                 </div>
-              </div>
-              <div class="mobile-card-details">
-                <div class="mobile-card-detail">
-                  <span class="mobile-card-label">${this.t('email')}</span>
-                  <span class="mobile-card-value">${emp.email}</span>
-                </div>
-                <div class="mobile-card-detail">
-                  <span class="mobile-card-label">${this.t('phone')}</span>
-                  <span class="mobile-card-value"
-                    >${emp.phoneNumber || 'No phone'}</span
+                <div class="mobile-card-actions">
+                  <button
+                    class="btn btn-primary"
+                    @click=${() => this._editEmployee(emp)}
                   >
-                </div>
-                <div class="mobile-card-detail">
-                  <span class="mobile-card-label">${this.t('position')}</span>
-                  <span class="mobile-card-value"
-                    >${emp.position || 'No position'}</span
+                    ${this.t('edit')}
+                  </button>
+                  <button
+                    class="btn btn-danger"
+                    @click=${() => this._deleteEmployee(emp)}
                   >
-                </div>
-                <div class="mobile-card-detail">
-                  <span class="mobile-card-label">Employed</span>
-                  <span class="mobile-card-value"
-                    >${this._formatDate(emp.dateOfEmployment) ||
-                    'Not specified'}</span
-                  >
+                    ${this.t('delete')}
+                  </button>
                 </div>
               </div>
-              <div class="mobile-card-actions">
-                <button
-                  class="btn btn-primary"
-                  @click=${() => this._editEmployee(emp)}
-                >
-                  ${this.t('edit')}
-                </button>
-                <button
-                  class="btn btn-danger"
-                  @click=${() => this._deleteEmployee(emp)}
-                >
-                  ${this.t('delete')}
-                </button>
-              </div>
-            </div>
-          `
-        )}
+            `
+          )}
+        </div>
         ${this._renderPagination()}
       </div>
     `;

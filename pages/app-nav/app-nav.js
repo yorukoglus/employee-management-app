@@ -2,6 +2,8 @@ import {LitElement, html} from 'lit';
 import {appNavStyles} from './app-nav.css.js';
 import {I18nMixin} from '../shared/i18n-mixin.js';
 import {menuSvg} from '../shared/svgs/menu.svg.js';
+import {flagEnSvg} from '../shared/svgs/flag-en.svg.js';
+import {flagTrSvg} from '../shared/svgs/flag-tr.svg.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
 export class AppNav extends I18nMixin(LitElement) {
@@ -19,7 +21,7 @@ export class AppNav extends I18nMixin(LitElement) {
   }
 
   _navigate(page) {
-    this._mobileMenuOpen = false; // Close mobile menu when navigating
+    this._mobileMenuOpen = false;
     this.active = page;
     this.dispatchEvent(
       new CustomEvent('navigate', {
@@ -71,14 +73,14 @@ export class AppNav extends I18nMixin(LitElement) {
               @click=${() => this._switchLanguage('en')}
               title="English"
             >
-              EN
+              ${unsafeSVG(flagEnSvg)}
             </button>
             <button
               class="lang-btn ${currentLang === 'tr' ? 'active' : ''}"
               @click=${() => this._switchLanguage('tr')}
               title="Türkçe"
             >
-              TR
+              ${unsafeSVG(flagTrSvg)}
             </button>
           </div>
         </div>

@@ -194,6 +194,11 @@ class I18nService {
   }
 
   _detectLanguage() {
+    const savedLanguage = localStorage.getItem('selectedLanguage');
+    if (savedLanguage && (savedLanguage === 'tr' || savedLanguage === 'en')) {
+      return savedLanguage;
+    }
+
     // Read from root HTML lang attribute
     const htmlLang = document.documentElement.lang;
     if (htmlLang && (htmlLang === 'tr' || htmlLang === 'en')) {
@@ -221,6 +226,7 @@ class I18nService {
           const newLang = document.documentElement.lang;
           if (newLang && (newLang === 'tr' || newLang === 'en')) {
             this.currentLanguage = newLang;
+            localStorage.setItem('selectedLanguage', newLang);
             this._notifyLanguageChange();
           }
         }
@@ -264,6 +270,7 @@ class I18nService {
     if (language === 'tr' || language === 'en') {
       document.documentElement.lang = language;
       this.currentLanguage = language;
+      localStorage.setItem('selectedLanguage', language);
       this._notifyLanguageChange();
     }
   }
@@ -271,6 +278,10 @@ class I18nService {
   // Helper method to get all available languages
   getAvailableLanguages() {
     return Object.keys(translations);
+  }
+
+  clearSavedLanguage() {
+    localStorage.removeItem('selectedLanguage');
   }
 }
 

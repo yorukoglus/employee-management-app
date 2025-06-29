@@ -66,23 +66,42 @@ export const appNavStyles = css`
     background: none;
     border: 1px solid #ddd;
     border-radius: 4px;
-    padding: 4px 8px;
+    padding: 6px;
     font-size: 12px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
     color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 24px;
+    overflow: hidden;
+  }
+
+  .lang-btn svg {
+    width: 20px;
+    height: 15px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
 
   .lang-btn:hover {
     border-color: #ff6600;
-    color: #ff6600;
+    transform: scale(1.05);
+    box-shadow: 0 2px 8px rgba(255, 102, 0, 0.2);
   }
 
   .lang-btn.active {
     background: #ff6600;
     border-color: #ff6600;
-    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 3px 12px rgba(255, 102, 0, 0.3);
+  }
+
+  .lang-btn.active svg {
+    filter: brightness(1.1);
   }
 
   .logo-area {
@@ -203,6 +222,13 @@ export const appNavStyles = css`
       max-width: 60px;
       padding: 8px 12px;
       font-size: 14px;
+      width: 40px;
+      height: 30px;
+    }
+
+    .lang-btn svg {
+      width: 24px;
+      height: 18px;
     }
   }
 

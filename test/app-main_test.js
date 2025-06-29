@@ -34,6 +34,10 @@ suite('app-main', () => {
     const element = new AppMain();
     const setupRouterSpy = sinon.spy(element, '_setupRouter');
 
+    element.renderRoot = {
+      querySelector: sinon.stub().returns(document.createElement('div')),
+    };
+
     element.firstUpdated();
 
     assert.isTrue(setupRouterSpy.called);

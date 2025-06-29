@@ -1,67 +1,65 @@
 # Employee Management Application
 
-Modern bir çalışan yönetim uygulaması. Bu uygulama, şirket çalışanlarını yönetmek için geliştirilmiş web tabanlı bir sistemdir.
+A modern employee management application. This application is a web-based system developed for managing company employees.
 
-## 🚀 Özellikler
+## 🚀 Features
 
-- **Çalışan Listesi**: Tüm çalışanları görüntüleme
-- **Çalışan Ekleme**: Yeni çalışan kaydı oluşturma
-- **Çalışan Düzenleme**: Mevcut çalışan bilgilerini güncelleme
-- **Çalışan Silme**: Çalışan kayıtlarını silme
-- **Arama ve Filtreleme**: Çalışanları arama ve filtreleme
-- **Responsive Tasarım**: Mobil ve masaüstü uyumlu arayüz
+- **Employee List**: View all employees
+- **Add Employee**: Create new employee records
+- **Edit Employee**: Update existing employee information
+- **Delete Employee**: Remove employee records
+- **Search and Filter**: Search and filter employees
+- **Responsive Design**: Mobile and desktop compatible interface
 
-## 🛠️ Teknolojiler
+## 🛠️ Technologies
 
 - **LitElement**: Modern web component framework
-- **JavaScript**: ES6+ özellikleri
+- **JavaScript**: ES6+ features
 - **CSS**: Styled components
-- **Web Components**: Standart web teknolojileri
+- **Web Components**: Standard web technologies
 
-## 📦 Kurulum
+## 📦 Installation
 
-Projeyi çalıştırmak için:
+To run the project:
 
 ```bash
-# Bağımlılıkları yükle
+# Install dependencies
 npm install
 
-# Geliştirme sunucusunu başlat
+# Start development server
 npm start
 ```
 
-Uygulama http://localhost:8000 adresinde açılacaktır.
+The application will open at http://localhost:8000.
 
-## 🏗️ Proje Yapısı
+## 🏗️ Project Structure
 
 ```
 components/
-├── app-nav/           # Navigasyon bileşeni
-├── employee-form/     # Çalışan form bileşeni
-├── employee-list/     # Çalışan listesi bileşeni
-└── employee-manager/  # Ana yönetici bileşeni
+├── app-nav/           # Navigation component
+├── employee-form/     # Employee form component
+├── employee-list/     # Employee list component
+└── employee-manager/  # Main manager component
 ```
 
-## 🧪 Test
+## 🧪 Testing
 
-Testleri çalıştırmak için:
+To run tests:
 
 ```bash
-# Tüm testleri çalıştır
+# Run all tests
 npm test
 
-# Testleri izleme modunda çalıştır
+# Run tests in watch mode
 npm run test:watch
 ```
 
-## 📝 Geliştirme
-
+## 📝 Development
 
 ```bash
 # Linting
 npm run lint
 
-# Kod formatlaması
+# Code formatting
 npm run format
 ```
-
