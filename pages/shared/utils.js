@@ -1,5 +1,4 @@
-import { Router } from '@vaadin/router';
-import { i18n } from './i18n.js';
+import {Router} from '@vaadin/router';
 
 export const navigation = {
   goToEmployeeList: () => {
@@ -25,22 +24,7 @@ export const navigation = {
       console.error('Navigation error:', error);
       window.location.href = `/employees/edit/${id}`;
     }
-  }
-};
-
-export const confirmations = {
-  deleteEmployee: (employee) => {
-    return window.confirm(
-      i18n.t('deleteEmployeeConfirmOld', {
-        firstName: employee.firstName,
-        lastName: employee.lastName
-      })
-    );
   },
-  
-  updateEmployee: () => {
-    return window.confirm(i18n.t('updateEmployeeConfirm'));
-  }
 };
 
 export const routeUtils = {
@@ -51,8 +35,8 @@ export const routeUtils = {
     }
     return null;
   },
-  
+
   isEditMode: () => {
     return window.location.pathname.startsWith('/employees/edit/');
-  }
-}; 
+  },
+};

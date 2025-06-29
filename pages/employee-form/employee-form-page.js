@@ -36,11 +36,52 @@ export class EmployeeFormPage extends I18nMixin(LitElement) {
 
   _handleEmployeeSaved(e) {
     const emp = e.detail;
+    let result = false;
+
     if (this.isEdit) {
-      employeeService.updateEmployee(emp);
+      result = employeeService.updateEmployee(emp);
+      if (result) {
+        localStorage.setItem(
+          'lastOperation',
+          JSON.stringify({
+            type: 'update',
+            success: true,
+            message: this.t('employeeUpdatedSuccess'),
+          })
+        );
+      } else {
+        localStorage.setItem(
+          'lastOperation',
+          JSON.stringify({
+            type: 'update',
+            success: false,
+            message: this.t('operationFailed'),
+          })
+        );
+      }
     } else {
-      employeeService.addEmployee(emp);
+      result = employeeService.addEmployee(emp);
+      if (result) {
+        localStorage.setItem(
+          'lastOperation',
+          JSON.stringify({
+            type: 'add',
+            success: true,
+            message: this.t('employeeAddedSuccess'),
+          })
+        );
+      } else {
+        localStorage.setItem(
+          'lastOperation',
+          JSON.stringify({
+            type: 'add',
+            success: false,
+            message: this.t('operationFailed'),
+          })
+        );
+      }
     }
+
     navigation.goToEmployeeList();
   }
 

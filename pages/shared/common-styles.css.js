@@ -29,7 +29,7 @@ export const commonStyles = css`
   }
 
   .btn-primary {
-    background: #3a237e;
+    background: #525099;
     color: #fff;
   }
   .btn-primary:hover {

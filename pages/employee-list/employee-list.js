@@ -35,7 +35,7 @@ export class EmployeeList extends I18nMixin(LitElement) {
     this.pageSize = 10;
     this._showDeleteModal = false;
     this._employeeToDelete = null;
-    this.viewMode = 'list';
+    this.viewMode = localStorage.getItem('employeeListViewMode') || 'list';
   }
 
   get filteredEmployees() {
@@ -130,6 +130,7 @@ export class EmployeeList extends I18nMixin(LitElement) {
 
   _setViewMode(mode) {
     this.viewMode = mode;
+    localStorage.setItem('employeeListViewMode', mode);
   }
 
   render() {
@@ -338,51 +339,73 @@ export class EmployeeList extends I18nMixin(LitElement) {
 
   _renderGridCards(employees) {
     return html`
-      <div class="employee-grid-container">
-        ${employees.map(
-          (emp) => html`
-            <div class="card">
-              <div class="employee-card-row">
-                <div><b>${this.t('firstName')}:</b> ${emp.firstName}</div>
-                <div><b>${this.t('lastName')}:</b> ${emp.lastName}</div>
-              </div>
-              <div class="employee-card-row">
-                <div>
-                  <b>${this.t('dateOfEmployment')}:</b> ${this._formatDate(
-                    emp.dateOfEmployment
-                  )}
+      <div>
+        <div class="employee-grid-container">
+          ${employees.map(
+            (emp) => html`
+              <div class="card">
+                <div class="employee-card-row">
+                  <div class="employee-item">
+                    <span class="label">${this.t('firstName')}:</span>
+                    <div class="value">${emp.firstName}</div>
+                  </div>
+                  <div class="employee-item">
+                    <span class="label">${this.t('lastName')}:</span>
+                    <div class="value">${emp.lastName}</div>
+                  </div>
                 </div>
-                <div>
-                  <b>${this.t('dateOfBirth')}:</b> ${this._formatDate(
-                    emp.dateOfBirth
-                  )}
+                <div class="employee-card-row">
+                  <div class="employee-item">
+                    <span class="label">${this.t('dateOfEmployment')}:</span>
+                    <div class="value">
+                      ${this._formatDate(emp.dateOfEmployment)}
+                    </div>
+                  </div>
+                  <div class="employee-item">
+                    <span class="label">${this.t('dateOfBirth')}:</span>
+                    <div class="value">
+                      ${this._formatDate(emp.dateOfBirth)}
+                    </div>
+                  </div>
+                </div>
+                <div class="employee-card-row">
+                  <div class="employee-item">
+                    <span class="label">${this.t('phone')}:</span>
+                    <div class="value">${emp.phoneNumber}</div>
+                  </div>
+                  <div class="employee-item">
+                    <span class="label">${this.t('email')}:</span>
+                    <div class="value">${emp.email}</div>
+                  </div>
+                </div>
+                <div class="employee-card-row">
+                  <div class="employee-item">
+                    <span class="label">${this.t('department')}:</span>
+                    <div class="value">${emp.department}</div>
+                  </div>
+                  <div class="employee-item">
+                    <span class="label">${this.t('position')}:</span>
+                    <div class="value">${emp.position}</div>
+                  </div>
+                </div>
+                <div class="employee-card-actions">
+                  <button
+                    class="btn btn-primary"
+                    @click=${() => this._editEmployee(emp)}
+                  >
+                    <span class="icon">✏️</span> ${this.t('edit')}
+                  </button>
+                  <button
+                    class="btn btn-danger"
+                    @click=${() => this._deleteEmployee(emp)}
+                  >
+                    <span class="icon">🗑️</span> ${this.t('delete')}
+                  </button>
                 </div>
               </div>
-              <div class="employee-card-row">
-                <div><b>${this.t('phone')}:</b> ${emp.phoneNumber}</div>
-                <div><b>${this.t('email')}:</b> ${emp.email}</div>
-              </div>
-              <div class="employee-card-row">
-                <div><b>${this.t('department')}:</b> ${emp.department}</div>
-                <div><b>${this.t('position')}:</b> ${emp.position}</div>
-              </div>
-              <div class="employee-card-actions">
-                <button
-                  class="btn btn-primary"
-                  @click=${() => this._editEmployee(emp)}
-                >
-                  <span class="icon">✏️</span> ${this.t('edit')}
-                </button>
-                <button
-                  class="btn btn-danger"
-                  @click=${() => this._deleteEmployee(emp)}
-                >
-                  <span class="icon">🗑️</span> ${this.t('delete')}
-                </button>
-              </div>
-            </div>
-          `
-        )}
+            `
+          )}
+        </div>
         ${this._renderPagination()}
       </div>
     `;

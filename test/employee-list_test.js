@@ -4,7 +4,7 @@ import {html} from 'lit/static-html.js';
 import sinon from 'sinon';
 import {EmployeeListPage} from '../pages/employee-list/employee-list-page.js';
 import {employeeService} from '../pages/services/employee-service.js';
-import {navigation, confirmations} from '../pages/shared/utils.js';
+import {navigation} from '../pages/shared/utils.js';
 
 suite('employee-list', () => {
   let element;
@@ -51,7 +51,7 @@ suite('employee-list', () => {
     assert.equal(element.view, 'table');
     assert.equal(element.search, '');
     assert.equal(element.page, 1);
-    assert.equal(element.pageSize, 5);
+    assert.equal(element.pageSize, 10);
     assert.isFalse(element._showDeleteModal);
     assert.isNull(element._employeeToDelete);
     assert.equal(element.viewMode, 'list');
@@ -232,7 +232,7 @@ suite('employee-list', () => {
     const pageSizeSelect =
       element.shadowRoot.querySelector('.page-size-select');
     assert.isNotNull(pageSizeSelect);
-    assert.equal(pageSizeSelect.value, '5');
+    assert.equal(pageSizeSelect.value, '10');
   });
 
   test('renders view toggle buttons', async () => {
@@ -357,6 +357,7 @@ suite('employee-list-page', () => {
           Çalışan Listesi
         </div>
         <employee-list></employee-list>
+        <toast-message></toast-message>
       `
     );
   });
@@ -385,42 +386,6 @@ suite('employee-list-page', () => {
     pageElement.disconnectedCallback();
 
     assert.isTrue(unsubscribeStub.called);
-  });
-
-  test('_handleDeleteEmployee calls service when confirmed', () => {
-    const confirmStub = sinon
-      .stub(confirmations, 'deleteEmployee')
-      .returns(true);
-    const deleteStub = sinon.stub(employeeService, 'deleteEmployee');
-
-    const employee = {id: '123', name: 'John Doe'};
-    const event = {detail: employee};
-
-    pageElement._handleDeleteEmployee(event);
-
-    assert.isTrue(confirmStub.calledWith(employee));
-    assert.isTrue(deleteStub.calledWith('123'));
-
-    confirmStub.restore();
-    deleteStub.restore();
-  });
-
-  test('_handleDeleteEmployee does not call service when not confirmed', () => {
-    const confirmStub = sinon
-      .stub(confirmations, 'deleteEmployee')
-      .returns(false);
-    const deleteStub = sinon.stub(employeeService, 'deleteEmployee');
-
-    const employee = {id: '123', name: 'John Doe'};
-    const event = {detail: employee};
-
-    pageElement._handleDeleteEmployee(event);
-
-    assert.isTrue(confirmStub.calledWith(employee));
-    assert.isFalse(deleteStub.called);
-
-    confirmStub.restore();
-    deleteStub.restore();
   });
 
   test('_handleEditEmployee calls navigation', () => {

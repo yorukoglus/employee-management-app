@@ -14,6 +14,7 @@ export const employeeListStyles = css`
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     padding: 32px 24px;
     .table-wrapper {
+      max-height: calc(100vh - 360px);
       overflow: auto;
     }
   }
@@ -89,6 +90,13 @@ export const employeeListStyles = css`
     color: #ff6600;
     font-weight: 600;
     border-bottom: 2px solid #f0f0f0;
+  }
+
+  thead th {
+    position: sticky;
+    top: 0;
+    background: #faf9f8;
+    z-index: 2;
   }
 
   tr {
@@ -342,16 +350,24 @@ export const employeeListStyles = css`
     grid-template-columns: repeat(2, 1fr);
     gap: 32px 24px;
     margin: 32px 0 0 0;
+    max-height: calc(100vh - 360px);
+    overflow-y: auto;
   }
-  @media (min-width: 1100px) {
-    .employee-grid-container {
-      grid-template-columns: repeat(4, 1fr);
-    }
-  }
+
   @media (max-width: 900px) {
     .employee-grid-container {
       grid-template-columns: 1fr;
       gap: 20px 0;
+    }
+  }
+  @media (min-width: 1200px) {
+    .employee-grid-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (min-width: 1650px) {
+    .employee-grid-container {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
   .employee-card-row {
@@ -360,6 +376,17 @@ export const employeeListStyles = css`
     font-size: 15px;
     color: #222;
     margin-bottom: 2px;
+    .employee-item {
+      overflow: hidden;
+      .label {
+        color: gray;
+      }
+      div.value {
+        font-weight: 600;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
   }
   .employee-card-row > div {
     flex: 1;

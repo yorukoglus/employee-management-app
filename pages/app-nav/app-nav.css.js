@@ -89,11 +89,15 @@ export const appNavStyles = css`
     display: flex;
     align-items: center;
     gap: 12px;
+    font-weight: 600;
   }
 
   .logo-img {
-    width: 32px;
-    height: 32px;
+    img {
+      width: 32px;
+      height: 32px;
+    }
+    overflow: hidden;
     border-radius: 8px;
     background: #ff6600;
     display: flex;
@@ -210,8 +214,10 @@ export const appNavStyles = css`
     }
 
     .logo-img {
-      width: 28px;
-      height: 28px;
+      img {
+        width: 28px;
+        height: 28px;
+      }
       font-size: 16px;
     }
 

@@ -43,7 +43,10 @@ export class AppNav extends I18nMixin(LitElement) {
     return html`
       <nav>
         <div class="logo-area">
-          <div class="logo-img">ING</div>
+          <div class="logo-img">
+            <img src="../../assets/logo-small.jpg" alt="logo" />
+          </div>
+          ING
         </div>
         <button class="mobile-menu-toggle" @click=${this._toggleMobileMenu}>
           ${unsafeSVG(menuSvg)}

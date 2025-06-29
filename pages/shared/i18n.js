@@ -86,6 +86,12 @@ const translations = {
     junior: 'Junior',
     medior: 'Medior',
     senior: 'Senior',
+
+    // Toast messages
+    employeeUpdatedSuccess: 'Employee updated successfully',
+    employeeDeletedSuccess: 'Employee deleted successfully',
+    employeeAddedSuccess: 'Employee added successfully',
+    operationFailed: 'Operation failed. Please try again.',
   },
 
   tr: {
@@ -172,6 +178,12 @@ const translations = {
     junior: 'Junior',
     medior: 'Medior',
     senior: 'Senior',
+
+    // Toast messages
+    employeeUpdatedSuccess: 'Çalışan başarıyla güncellendi',
+    employeeDeletedSuccess: 'Çalışan başarıyla silindi',
+    employeeAddedSuccess: 'Çalışan başarıyla eklendi',
+    operationFailed: 'İşlem başarısız. Lütfen tekrar deneyin.',
   },
 };
 
