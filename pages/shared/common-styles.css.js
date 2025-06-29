@@ -1,11 +1,10 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const commonStyles = css`
-  /* Ortak kart/kutu stili */
   .card {
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     border: 1.5px solid #e0e0e0;
     padding: 22px 20px 18px 20px;
     display: flex;
@@ -14,7 +13,6 @@ export const commonStyles = css`
     min-width: 0;
   }
 
-  /* Ortak buton stili */
   .btn {
     display: flex;
     align-items: center;
@@ -30,7 +28,6 @@ export const commonStyles = css`
     text-align: center;
   }
 
-  /* Renk varyasyonları */
   .btn-primary {
     background: #3a237e;
     color: #fff;
@@ -65,4 +62,4 @@ export const commonStyles = css`
       padding: 8px 0;
     }
   }
-`; 
+`;

@@ -9,6 +9,9 @@ import {editSvg} from '../shared/svgs/edit.svg.js';
 import {deleteSvg} from '../shared/svgs/delete.svg.js';
 import {unsafeSVG} from 'lit/directives/unsafe-svg.js';
 
+/**
+ * @property {Array} employees
+ */
 export class EmployeeList extends I18nMixin(LitElement) {
   static properties = {
     employees: {type: Array},
@@ -29,7 +32,7 @@ export class EmployeeList extends I18nMixin(LitElement) {
     this.view = 'table';
     this.search = '';
     this.page = 1;
-    this.pageSize = 5;
+    this.pageSize = 10;
     this._showDeleteModal = false;
     this._employeeToDelete = null;
     this.viewMode = 'list';
@@ -154,7 +157,10 @@ export class EmployeeList extends I18nMixin(LitElement) {
           class="search-input"
           type="text"
           placeholder=${this.t('searchPlaceholder')}
-          @input=${(e) => (this.search = e.target.value)}
+          @input=${(e) => {
+            this.search = e.target.value;
+            if (this.page !== 1) this.page = 1;
+          }}
           value=${this.search}
         />
         <label>

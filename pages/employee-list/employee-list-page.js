@@ -1,14 +1,13 @@
-import { LitElement, html } from 'lit';
-import { pageStyles } from '../shared/page-styles.css.js';
-import { icons } from '../shared/icons.js';
-import { navigation, confirmations } from '../shared/utils.js';
-import { I18nMixin } from '../shared/i18n-mixin.js';
+import {LitElement, html} from 'lit';
+import {pageStyles} from '../shared/page-styles.css.js';
+import {navigation, confirmations} from '../shared/utils.js';
+import {I18nMixin} from '../shared/i18n-mixin.js';
 import './employee-list.js';
-import { employeeService } from '../services/employee-service.js';
+import {employeeService} from '../services/employee-service.js';
 
 export class EmployeeListPage extends I18nMixin(LitElement) {
   static properties = {
-    employees: { type: Array },
+    employees: {type: Array},
   };
 
   static styles = pageStyles;
@@ -57,11 +56,8 @@ export class EmployeeListPage extends I18nMixin(LitElement) {
 
   render() {
     return html`
-      <div class="page-header">
-        ${icons.employeeList}
-        ${this.t('employeeList')}
-      </div>
-      <employee-list 
+      <div class="page-header">${this.t('employeeList')}</div>
+      <employee-list
         .employees=${this.employees}
         @edit-employee=${this._handleEditEmployee}
         @delete-employee=${this._handleDeleteEmployee}
@@ -71,4 +67,4 @@ export class EmployeeListPage extends I18nMixin(LitElement) {
   }
 }
 
-customElements.define('employee-list-page', EmployeeListPage); 
+customElements.define('employee-list-page', EmployeeListPage);

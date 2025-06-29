@@ -4,12 +4,12 @@ export const appMainStyles = css`
   :host {
     display: block;
     background: #f5f5f5;
-    font-family: 'Inter', Arial, sans-serif;
   }
 
   #outlet {
     min-height: 0;
     padding: 0 40px;
+    height: calc(100vh - 57px);
   }
 
   /* Mobile responsive adjustments */

@@ -1,15 +1,17 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const confirmModalStyles = css`
   :host {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 9999;
-    background: rgba(0,0,0,0.18);
-    font-family: 'Inter', Arial, sans-serif;
+    background: rgba(0, 0, 0, 0.18);
     visibility: hidden;
     pointer-events: none;
   }
@@ -20,7 +22,7 @@ export const confirmModalStyles = css`
   .modal {
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
     min-width: 340px;
     max-width: 95vw;
     padding: 28px 28px 24px 28px;
@@ -31,8 +33,14 @@ export const confirmModalStyles = css`
     animation: fadeIn 0.2s;
   }
   @keyframes fadeIn {
-    from { opacity: 0; transform: scale(0.98); }
-    to { opacity: 1; transform: scale(1); }
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
   }
   .modal-header {
     display: flex;
@@ -87,4 +95,4 @@ export const confirmModalStyles = css`
       gap: 10px;
     }
   }
-`; 
+`;

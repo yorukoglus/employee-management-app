@@ -1,21 +1,18 @@
-import { css } from 'lit';
+import {css} from 'lit';
 
 export const employeeFormStyles = css`
   :host {
     display: block;
     background: #fafafa;
     min-height: 100vh;
-    font-family: 'Inter', Arial, sans-serif;
   }
   .form-container {
     max-width: 92vw;
     width: 92vw;
-    min-width: 320px;
-    margin: 40px auto 0 auto;
     padding: 40px 32px 48px 32px;
     background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
     border: none;
   }
   .form-header {
@@ -49,7 +46,6 @@ export const employeeFormStyles = css`
   }
   .form-group input,
   .form-group select {
-    width: 100%;
     padding: 10px 12px;
     border: 1.2px solid #bdbdbd;
     border-radius: 3px;
@@ -99,7 +95,6 @@ export const employeeFormStyles = css`
   @media (max-width: 600px) {
     .form-container {
       padding: 12px 2vw 18px 2vw;
-      margin: 16px auto 0 auto;
     }
     .form-header {
       font-size: 20px;
@@ -116,4 +111,4 @@ export const employeeFormStyles = css`
       gap: 16px;
     }
   }
-`; 
+`;

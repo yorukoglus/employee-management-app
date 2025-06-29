@@ -4,8 +4,8 @@ export const employeeListStyles = css`
   :host {
     display: block;
     background: #f6f6f6;
-    min-height: 100vh;
-    font-family: 'Inter', Arial, sans-serif;
+    position: relative;
+    height: 100%;
   }
 
   .employee-list-container {
@@ -13,7 +13,6 @@ export const employeeListStyles = css`
     border-radius: 16px;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     padding: 32px 24px;
-    margin-top: 32px;
     .table-wrapper {
       overflow: auto;
     }
@@ -111,7 +110,6 @@ export const employeeListStyles = css`
   }
 
   input[type='checkbox'] {
-    accent-color: #ff6600;
     width: 18px;
     height: 18px;
     border-radius: 4px;
@@ -312,8 +310,12 @@ export const employeeListStyles = css`
       font-size: 13px;
     }
   }
-  /* View mode toggle bar ve grid/card view CSS'i aşağıda devam ediyor */
+
   .view-toggle-bar {
+    position: absolute;
+    right: 0;
+    top: -80px;
+
     display: flex;
     align-items: center;
     gap: 16px;

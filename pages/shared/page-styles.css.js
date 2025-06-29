@@ -3,17 +3,15 @@ import {css} from 'lit';
 export const pageStyles = css`
   :host {
     display: block;
-    font-family: 'Inter', Arial, sans-serif;
   }
 
   .page-header {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 24px 32px;
+    padding: 24px 0;
     font-size: 24px;
-    font-weight: 600;
-    color: #333;
+    color: #ff6600;
     margin: 0 auto;
   }
 

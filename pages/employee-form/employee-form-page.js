@@ -1,15 +1,14 @@
-import { LitElement, html } from 'lit';
-import { pageStyles } from '../shared/page-styles.css.js';
-import { icons } from '../shared/icons.js';
-import { navigation, routeUtils } from '../shared/utils.js';
-import { I18nMixin } from '../shared/i18n-mixin.js';
+import {LitElement, html} from 'lit';
+import {pageStyles} from '../shared/page-styles.css.js';
+import {navigation, routeUtils} from '../shared/utils.js';
+import {I18nMixin} from '../shared/i18n-mixin.js';
 import './employee-form.js';
-import { employeeService } from '../services/employee-service.js';
+import {employeeService} from '../services/employee-service.js';
 
 export class EmployeeFormPage extends I18nMixin(LitElement) {
   static properties = {
-    employee: { type: Object },
-    isEdit: { type: Boolean },
+    employee: {type: Object},
+    isEdit: {type: Boolean},
   };
 
   static styles = pageStyles;
@@ -52,7 +51,6 @@ export class EmployeeFormPage extends I18nMixin(LitElement) {
   render() {
     return html`
       <div class="page-header">
-        ${icons.form}
         ${this.isEdit ? this.t('editEmployee') : this.t('addEmployee')}
       </div>
       <employee-form
@@ -64,4 +62,4 @@ export class EmployeeFormPage extends I18nMixin(LitElement) {
   }
 }
 
-customElements.define('employee-form-page', EmployeeFormPage); 
+customElements.define('employee-form-page', EmployeeFormPage);

@@ -6,7 +6,6 @@ export class NotFoundPage extends I18nMixin(LitElement) {
   static styles = css`
     :host {
       display: block;
-      font-family: 'Inter', Arial, sans-serif;
       background: #f6f6f6;
       min-height: 100vh;
     }
