@@ -14,7 +14,9 @@ export const employeeListStyles = css`
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
     padding: 32px 24px;
     margin-top: 32px;
-    width: 100%;
+    .table-wrapper {
+      overflow: auto;
+    }
   }
 
   .search-bar {
@@ -57,14 +59,12 @@ export const employeeListStyles = css`
     white-space: nowrap;
   }
 
-  /* Table Styles */
   table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
     background: #fff;
     border-radius: 16px;
-    overflow: hidden;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   }
 
@@ -82,6 +82,7 @@ export const employeeListStyles = css`
     padding: 16px 12px;
     text-align: left;
     font-size: 15px;
+    white-space: nowrap;
   }
 
   th {

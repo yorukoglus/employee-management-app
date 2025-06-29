@@ -162,7 +162,7 @@ export class EmployeeList extends I18nMixin(LitElement) {
           <select
             class="page-size-select"
             @change=${this._changePageSize}
-            .value=${this.pageSize}
+            .value=${this.pageSize + ''}
           >
             <option value="3">3</option>
             <option value="5">5</option>
@@ -199,62 +199,67 @@ export class EmployeeList extends I18nMixin(LitElement) {
   _renderTable(employees) {
     return html`
       <div class="employee-list-container">
-        <table>
-          <thead>
-            <tr class="table-header">
-              <th class="checkbox-cell"><input type="checkbox" disabled /></th>
-              <th>${this.t('firstName')}</th>
-              <th>${this.t('lastName')}</th>
-              <th>${this.t('dateOfEmployment')}</th>
-              <th>${this.t('dateOfBirth')}</th>
-              <th>${this.t('phone')}</th>
-              <th>${this.t('email')}</th>
-              <th>${this.t('department')}</th>
-              <th>${this.t('position')}</th>
-              <th>${this.t('actions')}</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${employees.map(
-              (emp) => html`
-                <tr>
-                  <td class="checkbox-cell"><input type="checkbox" /></td>
-                  <td>
-                    ${emp.firstName || (emp.name ? emp.name.split(' ')[0] : '')}
-                  </td>
-                  <td>
-                    ${emp.lastName ||
-                    (emp.name ? emp.name.split(' ')[1] || '' : '')}
-                  </td>
-                  <td>${this._formatDate(emp.dateOfEmployment)}</td>
-                  <td>${this._formatDate(emp.dateOfBirth)}</td>
-                  <td>${emp.phoneNumber || '-'}</td>
-                  <td>${emp.email}</td>
-                  <td>${emp.department || '-'}</td>
-                  <td>${emp.position || '-'}</td>
-                  <td>
-                    <div class="action-icons">
-                      <button
-                        class="icon-btn"
-                        title=${this.t('edit')}
-                        @click=${() => this._editEmployee(emp)}
-                      >
-                        ${unsafeSVG(editSvg)}
-                      </button>
-                      <button
-                        class="icon-btn"
-                        title=${this.t('delete')}
-                        @click=${() => this._deleteEmployee(emp)}
-                      >
-                        ${unsafeSVG(deleteSvg)}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              `
-            )}
-          </tbody>
-        </table>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr class="table-header">
+                <th class="checkbox-cell">
+                  <input type="checkbox" disabled />
+                </th>
+                <th>${this.t('firstName')}</th>
+                <th>${this.t('lastName')}</th>
+                <th>${this.t('dateOfEmployment')}</th>
+                <th>${this.t('dateOfBirth')}</th>
+                <th>${this.t('phone')}</th>
+                <th>${this.t('email')}</th>
+                <th>${this.t('department')}</th>
+                <th>${this.t('position')}</th>
+                <th>${this.t('actions')}</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${employees.map(
+                (emp) => html`
+                  <tr>
+                    <td class="checkbox-cell"><input type="checkbox" /></td>
+                    <td>
+                      ${emp.firstName ||
+                      (emp.name ? emp.name.split(' ')[0] : '')}
+                    </td>
+                    <td>
+                      ${emp.lastName ||
+                      (emp.name ? emp.name.split(' ')[1] || '' : '')}
+                    </td>
+                    <td>${this._formatDate(emp.dateOfEmployment)}</td>
+                    <td>${this._formatDate(emp.dateOfBirth)}</td>
+                    <td>${emp.phoneNumber || '-'}</td>
+                    <td>${emp.email}</td>
+                    <td>${emp.department || '-'}</td>
+                    <td>${emp.position || '-'}</td>
+                    <td>
+                      <div class="action-icons">
+                        <button
+                          class="icon-btn"
+                          title=${this.t('edit')}
+                          @click=${() => this._editEmployee(emp)}
+                        >
+                          ${unsafeSVG(editSvg)}
+                        </button>
+                        <button
+                          class="icon-btn"
+                          title=${this.t('delete')}
+                          @click=${() => this._deleteEmployee(emp)}
+                        >
+                          ${unsafeSVG(deleteSvg)}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                `
+              )}
+            </tbody>
+          </table>
+        </div>
         ${this._renderPagination()}
       </div>
     `;
