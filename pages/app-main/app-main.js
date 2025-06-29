@@ -1,7 +1,7 @@
 import {LitElement, html} from 'lit';
 import {Router} from '@vaadin/router';
 import {appMainStyles} from './app-main.css.js';
-import {navigation} from '../shared/utils.js';
+import {navigation, routeUtils} from '../shared/utils.js';
 import '../app-nav/app-nav.js';
 import '../employee-list/employee-list-page.js';
 import '../employee-form/employee-form-page.js';
@@ -22,6 +22,14 @@ export class AppMain extends LitElement {
 
   firstUpdated() {
     this._setupRouter();
+    this._checkInitialRoute();
+  }
+
+  _checkInitialRoute() {
+    const currentPath = window.location.pathname;
+    if (!routeUtils.isValidRoute(currentPath)) {
+      navigation.goToHome();
+    }
   }
 
   _setupRouter() {
@@ -52,6 +60,11 @@ export class AppMain extends LitElement {
 
     this.router.subscribe((location) => {
       this.currentRoute = location.pathname;
+      // Check if the new route is valid
+      if (!routeUtils.isValidRoute(location.pathname)) {
+        console.warn(`Invalid route detected: ${location.pathname}`);
+        // Don't redirect here as the catch-all route will handle it
+      }
     });
   }
 
