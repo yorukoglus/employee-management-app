@@ -8,7 +8,7 @@
   "type": "module",
   "scripts": {
     "start": "npm run serve",
-    "build": "echo 'No build needed for static files'",
+    "build": "npm run build:rollup",
     "build:prod": "npm run build:rollup",
     "build:rollup": "rollup -c",
     "lint": "npm run lint:lit-analyzer && npm run lint:eslint",
