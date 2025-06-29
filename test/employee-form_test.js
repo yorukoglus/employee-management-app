@@ -3,6 +3,8 @@ import {fixture, assert} from '@open-wc/testing';
 import {html} from 'lit/static-html.js';
 import sinon from 'sinon';
 import {i18n} from '../pages/shared/i18n.js';
+import {EmployeeFormPage} from '../pages/employee-form/employee-form-page.js';
+import {employeeService} from '../pages/services/employee-service.js';
 
 suite('employee-form', () => {
   let element;
@@ -340,5 +342,90 @@ suite('employee-form', () => {
 
     assert.isTrue(event.preventDefault.called);
     assert.isFalse(savedSpy.called);
+  });
+});
+
+// Employee Form Page Tests
+suite('employee-form-page', () => {
+  let pageElement;
+
+  setup(async () => {
+    pageElement = await fixture(
+      html`<employee-form-page></employee-form-page>`
+    );
+  });
+
+  test('is defined', () => {
+    const el = document.createElement('employee-form-page');
+    assert.instanceOf(el, EmployeeFormPage);
+  });
+
+  test('renders with default structure', () => {
+    assert.shadowDom.equal(
+      pageElement,
+      `
+        <div class="page-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M14 2H6C4.9 2 4 2.9 4 4V20C4 21.1 4.89 22 5.99 22H18C19.1 22 20 21.1 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Çalışan Ekle
+        </div>
+        <employee-form></employee-form>
+      `
+    );
+  });
+
+  test('constructor sets default properties', () => {
+    const el = new EmployeeFormPage();
+    assert.isNull(el.employee);
+    assert.isFalse(el.isEdit);
+  });
+
+  test('_handleEmployeeSaved calls correct service method for edit mode', () => {
+    pageElement.isEdit = true;
+
+    const updateEmployeeStub = sinon.stub(employeeService, 'updateEmployee');
+    const addEmployeeStub = sinon.stub(employeeService, 'addEmployee');
+
+    const employee = {id: '123', name: 'John Doe'};
+    const event = {detail: employee};
+
+    pageElement._handleEmployeeSaved(event);
+
+    assert.isTrue(updateEmployeeStub.calledWith(employee));
+    assert.isFalse(addEmployeeStub.called);
+
+    updateEmployeeStub.restore();
+    addEmployeeStub.restore();
+  });
+
+  test('_handleEmployeeSaved calls correct service method for add mode', () => {
+    pageElement.isEdit = false;
+
+    const updateEmployeeStub = sinon.stub(employeeService, 'updateEmployee');
+    const addEmployeeStub = sinon.stub(employeeService, 'addEmployee');
+
+    const employee = {name: 'John Doe'};
+    const event = {detail: employee};
+
+    pageElement._handleEmployeeSaved(event);
+
+    assert.isFalse(updateEmployeeStub.called);
+    assert.isTrue(addEmployeeStub.calledWith(employee));
+
+    updateEmployeeStub.restore();
+    addEmployeeStub.restore();
+  });
+
+  test('connectedCallback calls _loadEmployeeFromRoute', () => {
+    const loadEmployeeSpy = sinon.spy(pageElement, '_loadEmployeeFromRoute');
+
+    pageElement.connectedCallback();
+
+    assert.isTrue(loadEmployeeSpy.called);
   });
 });

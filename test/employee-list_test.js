@@ -2,6 +2,9 @@ import {EmployeeList} from '../pages/employee-list/employee-list.js';
 import {fixture, assert} from '@open-wc/testing';
 import {html} from 'lit/static-html.js';
 import sinon from 'sinon';
+import {EmployeeListPage} from '../pages/employee-list/employee-list-page.js';
+import {employeeService} from '../pages/services/employee-service.js';
+import {navigation, confirmations} from '../pages/shared/utils.js';
 
 suite('employee-list', () => {
   let element;
@@ -312,5 +315,162 @@ suite('employee-list', () => {
       assert.isTrue(prevButton.hasAttribute('disabled'));
       assert.isTrue(nextButton.hasAttribute('disabled'));
     }
+  });
+
+  test('handles employee saved event correctly', () => {
+    const savedSpy = sinon.spy();
+    element.addEventListener('employee-saved', savedSpy);
+
+    const employee = {id: '123', name: 'John Doe'};
+    const event = new CustomEvent('employee-saved', {detail: employee});
+
+    element.dispatchEvent(event);
+
+    assert.isTrue(savedSpy.called);
+    assert.deepEqual(savedSpy.firstCall.args[0].detail, employee);
+  });
+});
+
+// Employee List Page Tests
+suite('employee-list-page', () => {
+  let pageElement;
+
+  setup(async () => {
+    pageElement = await fixture(
+      html`<employee-list-page></employee-list-page>`
+    );
+  });
+
+  test('is defined', () => {
+    const el = document.createElement('employee-list-page');
+    assert.instanceOf(el, EmployeeListPage);
+  });
+
+  test('renders with default structure', () => {
+    assert.shadowDom.equal(
+      pageElement,
+      `
+        <div class="page-header">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4C18.21 4 20 5.79 20 8C20 10.21 18.21 12 16 12C13.79 12 12 10.21 12 8C12 5.79 13.79 4 16 4ZM16 14C18.67 14 24 15.34 24 18V20H8V18C8 15.34 13.33 14 16 14ZM4 4C6.21 4 8 5.79 8 8C8 10.21 6.21 12 4 12C1.79 12 0 10.21 0 8C0 5.79 1.79 4 4 4ZM4 14C6.67 14 12 15.34 12 18V20H-4V18C-4 15.34 1.33 14 4 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Çalışan Listesi
+        </div>
+        <employee-list></employee-list>
+      `
+    );
+  });
+
+  test('constructor sets default properties', () => {
+    const el = new EmployeeListPage();
+    assert.isArray(el.employees);
+    assert.isNull(el._unsubscribe);
+  });
+
+  test('connectedCallback subscribes to employee service', () => {
+    const subscribeStub = sinon.stub(employeeService, 'subscribe');
+
+    pageElement.connectedCallback();
+
+    assert.isTrue(subscribeStub.called);
+    assert.isFunction(pageElement._unsubscribe);
+
+    subscribeStub.restore();
+  });
+
+  test('disconnectedCallback unsubscribes from employee service', () => {
+    const unsubscribeStub = sinon.stub();
+    pageElement._unsubscribe = unsubscribeStub;
+
+    pageElement.disconnectedCallback();
+
+    assert.isTrue(unsubscribeStub.called);
+  });
+
+  test('_handleDeleteEmployee calls service when confirmed', () => {
+    const confirmStub = sinon
+      .stub(confirmations, 'deleteEmployee')
+      .returns(true);
+    const deleteStub = sinon.stub(employeeService, 'deleteEmployee');
+
+    const employee = {id: '123', name: 'John Doe'};
+    const event = {detail: employee};
+
+    pageElement._handleDeleteEmployee(event);
+
+    assert.isTrue(confirmStub.calledWith(employee));
+    assert.isTrue(deleteStub.calledWith('123'));
+
+    confirmStub.restore();
+    deleteStub.restore();
+  });
+
+  test('_handleDeleteEmployee does not call service when not confirmed', () => {
+    const confirmStub = sinon
+      .stub(confirmations, 'deleteEmployee')
+      .returns(false);
+    const deleteStub = sinon.stub(employeeService, 'deleteEmployee');
+
+    const employee = {id: '123', name: 'John Doe'};
+    const event = {detail: employee};
+
+    pageElement._handleDeleteEmployee(event);
+
+    assert.isTrue(confirmStub.calledWith(employee));
+    assert.isFalse(deleteStub.called);
+
+    confirmStub.restore();
+    deleteStub.restore();
+  });
+
+  test('_handleEditEmployee calls navigation', () => {
+    const navigationStub = sinon.stub(navigation, 'goToEditEmployee');
+
+    const employee = {id: '123', name: 'John Doe'};
+    const event = {detail: employee};
+
+    pageElement._handleEditEmployee(event);
+
+    assert.isTrue(navigationStub.calledWith('123'));
+
+    navigationStub.restore();
+  });
+
+  test('_handleEmployeeSaved calls updateEmployee for existing employee', () => {
+    const updateStub = sinon.stub(employeeService, 'updateEmployee');
+    const addStub = sinon.stub(employeeService, 'addEmployee');
+    const navigationStub = sinon.stub(navigation, 'goToEmployeeList');
+
+    const employee = {id: '123', name: 'John Doe'};
+    const event = {detail: employee};
+
+    pageElement._handleEmployeeSaved(event);
+
+    assert.isTrue(updateStub.calledWith(employee));
+    assert.isFalse(addStub.called);
+    assert.isTrue(navigationStub.called);
+
+    updateStub.restore();
+    addStub.restore();
+    navigationStub.restore();
+  });
+
+  test('_handleEmployeeSaved calls addEmployee for new employee', () => {
+    const updateStub = sinon.stub(employeeService, 'updateEmployee');
+    const addStub = sinon.stub(employeeService, 'addEmployee');
+    const navigationStub = sinon.stub(navigation, 'goToEmployeeList');
+
+    const employee = {name: 'John Doe'};
+    const event = {detail: employee};
+
+    pageElement._handleEmployeeSaved(event);
+
+    assert.isFalse(updateStub.called);
+    assert.isTrue(addStub.calledWith(employee));
+    assert.isTrue(navigationStub.called);
+
+    updateStub.restore();
+    addStub.restore();
+    navigationStub.restore();
   });
 });
