@@ -10,7 +10,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 
 export default {
-  input: 'my-element.js',
+  input: '/pages/app-main/app-main.js',
   output: {
     file: 'dist/my-element.bundled.js',
     format: 'esm',
