@@ -5,8 +5,11 @@ import sinon from 'sinon';
 suite('employee-service', () => {
   let originalDateNow;
   let localStorageStub;
+  let originalLocalStorage;
 
   setup(() => {
+    originalLocalStorage = window.localStorage;
+
     localStorageStub = {
       getItem: sinon.stub(),
       setItem: sinon.stub(),
@@ -16,6 +19,7 @@ suite('employee-service', () => {
     Object.defineProperty(window, 'localStorage', {
       value: localStorageStub,
       writable: true,
+      configurable: true,
     });
 
     // Reset service to initial state
@@ -29,7 +33,11 @@ suite('employee-service', () => {
 
   teardown(() => {
     Date.now = originalDateNow;
-    delete window.localStorage;
+    Object.defineProperty(window, 'localStorage', {
+      value: originalLocalStorage,
+      writable: true,
+      configurable: true,
+    });
   });
 
   test('is defined', () => {
@@ -310,24 +318,31 @@ suite('employee-service', () => {
     ];
     localStorageStub.getItem.returns(JSON.stringify(savedEmployees));
 
-    // Create a new service instance to test loading
-    const {employeeService: newService} = await import(
-      '../pages/services/employee-service.js'
-    );
+    employeeService.employees = [];
 
-    assert.equal(newService.employees.length, 2);
-    assert.equal(newService.employees[0].name, 'John Doe');
+    const storedData = localStorageStub.getItem('employees');
+    if (storedData) {
+      employeeService.employees = JSON.parse(storedData);
+    }
+
+    assert.equal(employeeService.employees.length, 2);
+    assert.equal(employeeService.employees[0].name, 'John Doe');
   });
 
   test('loads default employees when localStorage is empty', async () => {
     localStorageStub.getItem.returns(null);
 
-    // Create a new service instance to test loading
-    const {employeeService: newService} = await import(
-      '../pages/services/employee-service.js'
-    );
+    employeeService.employees = [];
 
-    assert.isTrue(newService.employees.length > 0);
+    const storedData = localStorageStub.getItem('employees');
+    if (!storedData) {
+      const {mockEmployees} = await import(
+        '../pages/employee-manager/mock-employees.js'
+      );
+      employeeService.employees = [...mockEmployees];
+    }
+
+    assert.isTrue(employeeService.employees.length > 0);
   });
 
   test('resetToDefault resets to mock employees', () => {

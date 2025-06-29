@@ -34,14 +34,33 @@ customElements.define('test-i18n-element', TestElement);
 suite('i18n-mixin', () => {
   let element;
   let i18nStub;
+  let localStorageStub;
+  let originalLocalStorage;
 
   setup(async () => {
-    i18n.setLanguage('tr');
+    originalLocalStorage = window.localStorage;
 
-    // Mock i18n module manually
+    localStorageStub = {
+      getItem: sinon.stub(),
+      setItem: sinon.stub(),
+      removeItem: sinon.stub(),
+    };
+
+    Object.defineProperty(window, 'localStorage', {
+      value: localStorageStub,
+      writable: true,
+      configurable: true,
+    });
+
     i18nStub = {
-      t: sinon.stub(),
-      getCurrentLanguage: sinon.stub(),
+      t: sinon.stub().callsFake((key) => {
+        const translations = {
+          'test.key': 'Test Value',
+          greeting: 'Hello John',
+        };
+        return translations[key] || key;
+      }),
+      getCurrentLanguage: sinon.stub().returns('tr'),
       setLanguage: sinon.stub(),
     };
 
@@ -55,6 +74,11 @@ suite('i18n-mixin', () => {
 
   teardown(() => {
     sinon.restore();
+    Object.defineProperty(window, 'localStorage', {
+      value: originalLocalStorage,
+      writable: true,
+      configurable: true,
+    });
   });
 
   test('is defined', () => {
@@ -179,28 +203,32 @@ suite('i18n-mixin', () => {
   });
 
   test('setLanguage saves to localStorage', () => {
-    localStorage.removeItem('selectedLanguage');
+    localStorageStub.removeItem.returns(undefined);
+    localStorageStub.getItem.returns('en');
 
     i18n.setLanguage('en');
 
-    assert.equal(localStorage.getItem('selectedLanguage'), 'en');
+    assert.isTrue(
+      localStorageStub.setItem.calledWith('selectedLanguage', 'en')
+    );
   });
 
   test('detects language from localStorage', () => {
-    localStorage.setItem('selectedLanguage', 'tr');
+    localStorageStub.setItem.returns(undefined);
+    localStorageStub.getItem.returns('tr');
 
     const currentLang = i18n.getCurrentLanguage();
-
-    localStorage.removeItem('selectedLanguage');
 
     assert.isString(currentLang);
   });
 
   test('clearSavedLanguage removes from localStorage', () => {
-    localStorage.setItem('selectedLanguage', 'tr');
+    localStorageStub.setItem.returns(undefined);
+    localStorageStub.removeItem.returns(undefined);
+    localStorageStub.getItem.returns(null);
 
     i18n.clearSavedLanguage();
 
-    assert.isNull(localStorage.getItem('selectedLanguage'));
+    assert.isTrue(localStorageStub.removeItem.calledWith('selectedLanguage'));
   });
 });

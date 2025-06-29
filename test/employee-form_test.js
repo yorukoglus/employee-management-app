@@ -227,7 +227,7 @@ suite('employee-form', () => {
 
   test('shows error messages when validation fails', async () => {
     // Set invalid data
-    element.formData = {
+    element._formData = {
       firstName: '',
       lastName: '',
       email: 'invalid-email',
@@ -251,7 +251,7 @@ suite('employee-form', () => {
 
   test('applies error class to form groups with errors', async () => {
     // Set invalid data
-    element.formData = {
+    element._formData = {
       firstName: '',
       lastName: '',
       email: 'invalid-email',

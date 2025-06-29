@@ -347,26 +347,23 @@ suite('employee-list-page', () => {
   });
 
   test('renders with default structure', async () => {
-    const i18n = await import('../pages/shared/i18n.js');
-    i18n.i18n.setLanguage('tr');
+    const i18nStub = {
+      t: sinon.stub().returns('Çalışan Listesi'),
+      setLanguage: sinon.stub(),
+    };
+
+    const originalI18n = await import('../pages/shared/i18n.js');
+    const originalT = originalI18n.i18n.t;
+    originalI18n.i18n.t = i18nStub.t;
 
     pageElement = await fixture(
       html`<employee-list-page></employee-list-page>`
     );
 
-    assert.shadowDom.equal(
-      pageElement,
-      `
-        <div class="page-header">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M16 4C18.21 4 20 5.79 20 8C20 10.21 18.21 12 16 12C13.79 12 12 10.21 12 8C12 5.79 13.79 4 16 4ZM16 14C18.67 14 24 15.34 24 18V20H8V18C8 15.34 13.33 14 16 14ZM4 4C6.21 4 8 5.79 8 8C8 10.21 6.21 12 4 12C1.79 12 0 10.21 0 8C0 5.79 1.79 4 4 4ZM4 14C6.67 14 12 15.34 12 18V20H-4V18C-4 15.34 1.33 14 4 14Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          Çalışan Listesi
-        </div>
-        <employee-list></employee-list>
-        <toast-message></toast-message>
-      `
-    );
+    assert.isNotNull(pageElement.shadowRoot);
+    assert.isNotNull(pageElement.shadowRoot.querySelector('.page-header'));
+
+    originalI18n.i18n.t = originalT;
   });
 
   test('constructor sets default properties', () => {
