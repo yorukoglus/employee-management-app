@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'lit';
-import { navigation } from '../shared/utils.js';
-import { I18nMixin } from '../shared/i18n-mixin.js';
+import {LitElement, html, css} from 'lit';
+import {navigation} from '../shared/utils.js';
+import {I18nMixin} from '../shared/i18n-mixin.js';
 
 export class NotFoundPage extends I18nMixin(LitElement) {
   static styles = css`
@@ -178,9 +178,7 @@ export class NotFoundPage extends I18nMixin(LitElement) {
       <div class="not-found-container">
         <div class="not-found-icon">404</div>
         <h1 class="not-found-title">${this.t('pageNotFound')}</h1>
-        <p class="not-found-subtitle">
-          ${this.t('pageNotFoundSubtitle')}
-        </p>
+        <p class="not-found-subtitle">${this.t('pageNotFoundSubtitle')}</p>
         <button class="go-home-btn" @click=${this._goHome}>
           ${this.t('goToEmployeeList')}
         </button>
@@ -189,4 +187,4 @@ export class NotFoundPage extends I18nMixin(LitElement) {
   }
 }
 
-customElements.define('not-found-page', NotFoundPage); 
+customElements.define('not-found-page', NotFoundPage);

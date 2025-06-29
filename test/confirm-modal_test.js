@@ -1,0 +1,227 @@
+import {ConfirmModal} from '../pages/components/confirm-modal/confirm-modal.js';
+import {fixture, assert} from '@open-wc/testing';
+import {html} from 'lit/static-html.js';
+import sinon from 'sinon';
+import {i18n} from '../pages/shared/i18n.js';
+
+suite('confirm-modal', () => {
+  let element;
+
+  setup(async () => {
+    i18n.setLanguage('tr');
+    element = await fixture(html`<confirm-modal></confirm-modal>`);
+  });
+
+  test('is defined', () => {
+    const el = document.createElement('confirm-modal');
+    assert.instanceOf(el, ConfirmModal);
+  });
+
+  test('has correct default properties', () => {
+    assert.isFalse(element.open);
+    assert.equal(element.title, '');
+    assert.equal(element.message, '');
+  });
+
+  test('renders with default structure', () => {
+    assert.shadowDom.equal(
+      element,
+      `
+        <div class="modal">
+          <div class="modal-header">
+            <span class="modal-title">
+            </span>
+            <button class="close-btn" title="Kapat">
+              ✕
+            </button>
+          </div>
+          <div class="modal-message">
+          </div>
+          <div class="modal-actions">
+            <button class="btn btn-danger">
+              Devam Et
+            </button>
+            <button class="btn btn-outline">
+              İptal
+            </button>
+          </div>
+        </div>
+      `
+    );
+  });
+
+  test('renders with custom title and message', async () => {
+    element.title = 'Test Title';
+    element.message = 'Test Message';
+    await element.updateComplete;
+
+    const titleElement = element.shadowRoot.querySelector('.modal-title');
+    const messageElement = element.shadowRoot.querySelector('.modal-message');
+
+    assert.equal(titleElement.textContent, 'Test Title');
+    assert.equal(messageElement.textContent, 'Test Message');
+  });
+
+  test('dispatches cancel event when close button is clicked', () => {
+    const cancelSpy = sinon.spy();
+    element.addEventListener('cancel', cancelSpy);
+
+    const closeButton = element.shadowRoot.querySelector('.close-btn');
+    closeButton.click();
+
+    assert.isTrue(cancelSpy.called);
+  });
+
+  test('dispatches cancel event when cancel button is clicked', () => {
+    const cancelSpy = sinon.spy();
+    element.addEventListener('cancel', cancelSpy);
+
+    const cancelButton = element.shadowRoot.querySelector('.btn-outline');
+    cancelButton.click();
+
+    assert.isTrue(cancelSpy.called);
+  });
+
+  test('dispatches proceed event when proceed button is clicked', () => {
+    const proceedSpy = sinon.spy();
+    element.addEventListener('proceed', proceedSpy);
+
+    const proceedButton = element.shadowRoot.querySelector('.btn-danger');
+    proceedButton.click();
+
+    assert.isTrue(proceedSpy.called);
+  });
+
+  test('cancel event bubbles and is composed', () => {
+    const cancelSpy = sinon.spy();
+    element.addEventListener('cancel', cancelSpy);
+
+    element._close();
+
+    const event = cancelSpy.firstCall.args[0];
+    assert.isTrue(event.bubbles);
+    assert.isTrue(event.composed);
+  });
+
+  test('proceed event bubbles and is composed', () => {
+    const proceedSpy = sinon.spy();
+    element.addEventListener('proceed', proceedSpy);
+
+    element._proceed();
+
+    const event = proceedSpy.firstCall.args[0];
+    assert.isTrue(event.bubbles);
+    assert.isTrue(event.composed);
+  });
+
+  test('updates title when property changes', async () => {
+    element.title = 'New Title';
+    await element.updateComplete;
+
+    const titleElement = element.shadowRoot.querySelector('.modal-title');
+    assert.equal(titleElement.textContent, 'New Title');
+  });
+
+  test('updates message when property changes', async () => {
+    element.message = 'New Message';
+    await element.updateComplete;
+
+    const messageElement = element.shadowRoot.querySelector('.modal-message');
+    assert.equal(messageElement.textContent, 'New Message');
+  });
+
+  test('renders all required elements', async () => {
+    const modal = element.shadowRoot.querySelector('.modal');
+    const header = element.shadowRoot.querySelector('.modal-header');
+    const title = element.shadowRoot.querySelector('.modal-title');
+    const closeBtn = element.shadowRoot.querySelector('.close-btn');
+    const message = element.shadowRoot.querySelector('.modal-message');
+    const actions = element.shadowRoot.querySelector('.modal-actions');
+    const proceedBtn = element.shadowRoot.querySelector('.btn-danger');
+    const cancelBtn = element.shadowRoot.querySelector('.btn-outline');
+
+    assert.isNotNull(modal);
+    assert.isNotNull(header);
+    assert.isNotNull(title);
+    assert.isNotNull(closeBtn);
+    assert.isNotNull(message);
+    assert.isNotNull(actions);
+    assert.isNotNull(proceedBtn);
+    assert.isNotNull(cancelBtn);
+  });
+
+  test('close button has correct title attribute', async () => {
+    const closeButton = element.shadowRoot.querySelector('.close-btn');
+    assert.equal(closeButton.getAttribute('title'), 'Kapat');
+  });
+
+  test('buttons have correct text content', async () => {
+    const proceedButton = element.shadowRoot.querySelector('.btn-danger');
+    const cancelButton = element.shadowRoot.querySelector('.btn-outline');
+
+    assert.equal(proceedButton.textContent.trim(), 'Devam Et');
+    assert.equal(cancelButton.textContent.trim(), 'İptal');
+  });
+
+  test('close button has correct symbol', async () => {
+    const closeButton = element.shadowRoot.querySelector('.close-btn');
+    assert.include(closeButton.textContent, '✕');
+  });
+
+  test('handles empty title and message gracefully', async () => {
+    element.title = '';
+    element.message = '';
+    await element.updateComplete;
+
+    const titleElement = element.shadowRoot.querySelector('.modal-title');
+    const messageElement = element.shadowRoot.querySelector('.modal-message');
+
+    assert.equal(titleElement.textContent, '');
+    assert.equal(messageElement.textContent, '');
+  });
+
+  test('handles special characters in title and message', async () => {
+    element.title = 'Title with <script>alert("xss")</script>';
+    element.message = 'Message with & < > " \' characters';
+    await element.updateComplete;
+
+    const titleElement = element.shadowRoot.querySelector('.modal-title');
+    const messageElement = element.shadowRoot.querySelector('.modal-message');
+
+    // Should be escaped and safe
+    assert.include(titleElement.textContent, 'Title with');
+    assert.include(messageElement.textContent, 'Message with');
+  });
+
+  test('modal structure is correct', async () => {
+    const modal = element.shadowRoot.querySelector('.modal');
+    const header = modal.querySelector('.modal-header');
+    const message = modal.querySelector('.modal-message');
+    const actions = modal.querySelector('.modal-actions');
+
+    assert.isNotNull(header);
+    assert.isNotNull(message);
+    assert.isNotNull(actions);
+    assert.equal(header.parentElement, modal);
+    assert.equal(message.parentElement, modal);
+    assert.equal(actions.parentElement, modal);
+  });
+
+  test('header contains title and close button', async () => {
+    const header = element.shadowRoot.querySelector('.modal-header');
+    const title = header.querySelector('.modal-title');
+    const closeBtn = header.querySelector('.close-btn');
+
+    assert.isNotNull(title);
+    assert.isNotNull(closeBtn);
+  });
+
+  test('actions contain proceed and cancel buttons', async () => {
+    const actions = element.shadowRoot.querySelector('.modal-actions');
+    const proceedBtn = actions.querySelector('.btn-danger');
+    const cancelBtn = actions.querySelector('.btn-outline');
+
+    assert.isNotNull(proceedBtn);
+    assert.isNotNull(cancelBtn);
+  });
+});
